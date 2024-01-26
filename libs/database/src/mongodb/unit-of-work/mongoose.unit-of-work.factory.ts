@@ -1,7 +1,6 @@
 import { Connection } from 'mongoose';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
-import { API_DB_CONNECTION } from '@app/database/api-mongoose.constants';
 import {
   IUnitOfWork,
   IUnitOfWorkFactory,
@@ -9,6 +8,7 @@ import {
 import { Injectable } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 
+import { API_DB_CONNECTION } from '../mongodb.constants';
 import { MongooseUnitOfWork } from './mongoose.unit-or-work';
 
 @Injectable()

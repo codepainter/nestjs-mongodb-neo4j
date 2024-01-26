@@ -4,7 +4,7 @@ import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 import {
   API_DB_CONNECTION,
   USER_MODEL,
-} from '@app/database/api-mongoose.constants';
+} from '@app/database/mongodb/mongodb.constants';
 import {
   UserDocument,
   UserModel,

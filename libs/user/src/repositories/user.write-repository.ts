@@ -4,7 +4,7 @@ import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 import {
   API_DB_CONNECTION,
   USER_MODEL,
-} from '@app/database/api-mongoose.constants';
+} from '@app/database/mongodb/mongodb.constants';
 import {
   UserDocument,
   UserModel,
@@ -24,10 +24,14 @@ import { USER_AGGREGATE_FACTORY } from '../user.constants';
 
 @Injectable()
 export class UserWriteRepository implements IUserWriteRepository {
+  public get logger(): PinoLogger {
+    return this._logger;
+  }
   private model: UserModel;
 
   constructor(
-    @InjectPinoLogger(UserWriteRepository.name) readonly logger: PinoLogger,
+    @InjectPinoLogger(UserWriteRepository.name)
+    private readonly _logger: PinoLogger,
     @InjectConnection(API_DB_CONNECTION) readonly connection: Connection,
     @Inject(USER_AGGREGATE_FACTORY) readonly factory: UserAggregateFactory,
   ) {

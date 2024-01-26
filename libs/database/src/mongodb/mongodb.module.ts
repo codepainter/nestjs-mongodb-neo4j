@@ -3,12 +3,12 @@ import mongoose from 'mongoose';
 import { Module } from '@nestjs/common';
 import { MongooseModule, MongooseModuleFactoryOptions } from '@nestjs/mongoose';
 
+import { ApiMongooseConfigModule } from './config/config.module';
+import { ApiMongooseConfigService } from './config/config.service';
 import {
   API_DB_CONNECTION,
   MONGOOSE_UNIT_OF_WORK_FACTORY,
-} from '../api-mongoose.constants';
-import { ApiMongooseConfigModule } from './config/config.module';
-import { ApiMongooseConfigService } from './config/config.service';
+} from './mongodb.constants';
 import { MongooseUnitOfWorkFactory } from './unit-of-work/mongoose.unit-of-work.factory';
 
 @Module({

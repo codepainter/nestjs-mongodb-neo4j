@@ -1,6 +1,6 @@
 import { join, resolve } from 'path';
 
-import { MongoDBModule } from '@app/database/mongodb/api-mongoose.module';
+import { MongoDBModule } from '@app/database/mongodb/mongodb.module';
 import { HealthModule } from '@app/health';
 import { LoggerModule } from '@app/logger';
 import { Environment } from '@app/shared/shared.constants';
