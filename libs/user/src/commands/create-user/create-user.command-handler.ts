@@ -31,11 +31,7 @@ export class CreateUserCommandHandler extends CommandHandlerBase<
     const user = this.factory.create({
       name: command.props.name,
       email: command.props.email,
-      phone: command.props.phone,
       password: command.props.password,
-      coachName: command.props.coachName,
-      coachPhone: command.props.coachPhone,
-      platinumName: command.props.platinumName,
     });
 
     await this.userWriteRepo.create(user.props());

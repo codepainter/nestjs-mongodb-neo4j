@@ -20,11 +20,7 @@ export class UserAggregateFactory {
         deletedAt: null,
         name: props.name,
         email: props.email,
-        phone: props.phone,
         password: PasswordUtil.hash(props.password),
-        coachName: props.coachName,
-        coachPhone: props.coachPhone,
-        platinumName: props.platinumName,
       }),
     );
   }
@@ -35,10 +31,7 @@ export class UserAggregateFactory {
         id: props.id,
         email: props.email,
         name: props.name,
-        phone: props.phone,
-        coachName: props.coachName,
-        coachPhone: props.coachPhone,
-        platinumName: props.platinumName,
+
         password: props.password,
         createdAt: props.createdAt,
         updatedAt: props.updatedAt,

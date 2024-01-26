@@ -31,15 +31,6 @@ export interface IUserWriteRepository {
   /**
    *
    *
-   * @param {string} phone
-   * @return {*}  {Promise<User>}
-   * @memberof IUserWriteRepository
-   */
-  findByPhone(phone: string): Promise<User>;
-
-  /**
-   *
-   *
    * @param {string} id
    * @param {UserUpdatableProps} props
    * @return {*}  {Promise<void>}

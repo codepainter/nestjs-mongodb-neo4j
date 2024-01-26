@@ -9,7 +9,7 @@ import {
   UserDocument,
   UserModel,
   UserSchema,
-} from '@app/database/api-service/schemas/user.schema';
+} from '@app/database/mongodb/schemas/user.schema';
 import { Injectable } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 
@@ -43,7 +43,6 @@ export class UserReadRepository implements IUserReadRepository {
       id: doc.id,
       name: doc.name,
       email: doc.email,
-      phone: doc.phone,
     });
   }
 }

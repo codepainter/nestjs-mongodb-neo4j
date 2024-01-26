@@ -39,4 +39,4 @@ import { MongooseUnitOfWorkFactory } from './unit-of-work/mongoose.unit-of-work.
   ],
   exports: [MONGOOSE_UNIT_OF_WORK_FACTORY, API_DB_CONNECTION],
 })
-export class ApiMongooseModule {}
+export class MongoDBModule {}

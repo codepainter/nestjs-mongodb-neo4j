@@ -9,7 +9,7 @@ import {
   UserDocument,
   UserModel,
   UserSchema,
-} from '@app/database/api-service/schemas/user.schema';
+} from '@app/database/mongodb/schemas/user.schema';
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 
@@ -65,17 +65,6 @@ export class UserWriteRepository implements IUserWriteRepository {
     return this.toDomain(user);
   }
 
-  async findByPhone(phone: string): Promise<User> {
-    this.logger.trace(`findByPhone()`);
-    this.logger.debug({ phone }, 'Props');
-
-    const user = await this.model.findOne({ phone });
-    this.logger.debug({ user }, 'User');
-    if (!user) throw new UserNotFoundException({ phone });
-
-    return this.toDomain(user);
-  }
-
   async update(id: string, props: Partial<UserUpdatableProps>): Promise<void> {
     this.logger.trace(`update()`);
     this.logger.debug({ id, props }, 'Props');
@@ -95,10 +84,6 @@ export class UserWriteRepository implements IUserWriteRepository {
       id: doc.id.toString(),
       name: doc.name,
       email: doc.email,
-      phone: doc.phone,
-      coachName: doc.coachName,
-      coachPhone: doc.coachPhone,
-      platinumName: doc.platinumName,
       password: doc.password,
       createdAt: doc.createdAt,
       updatedAt: doc.updatedAt,

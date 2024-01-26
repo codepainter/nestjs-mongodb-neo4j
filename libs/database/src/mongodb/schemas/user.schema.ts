@@ -16,18 +16,6 @@ export class User extends BaseSchema {
   @Prop({ unique: true })
   email: string;
 
-  @Prop({ unique: true })
-  phone: string;
-
-  @Prop()
-  coachName: string;
-
-  @Prop()
-  coachPhone: string;
-
-  @Prop()
-  platinumName: string;
-
   @Prop()
   password: string;
 }

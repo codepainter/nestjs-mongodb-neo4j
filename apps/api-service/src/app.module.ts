@@ -1,5 +1,6 @@
 import { join, resolve } from 'path';
 
+import { MongoDBModule } from '@app/database/mongodb/api-mongoose.module';
 import { HealthModule } from '@app/health';
 import { LoggerModule } from '@app/logger';
 import { Environment } from '@app/shared/shared.constants';
@@ -8,7 +9,6 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
 import { AppConfigModule } from './config/config.module';
-import { ApiMongooseModule } from '@app/database/api-service/api-mongoose.module';
 
 @Module({
   imports: [
@@ -23,7 +23,7 @@ import { ApiMongooseModule } from '@app/database/api-service/api-mongoose.module
     LoggerModule.init({
       exclude: ['health'],
     }),
-    ApiMongooseModule,
+    MongoDBModule,
     HealthModule,
     UserModule,
   ],

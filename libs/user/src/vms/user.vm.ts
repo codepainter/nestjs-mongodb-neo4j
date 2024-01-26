@@ -10,9 +10,6 @@ export class UserVM {
   @Expose({ name: 'email' })
   email: string;
 
-  @Expose({ name: 'phone' })
-  phone: string;
-
   constructor(props: UserVM) {
     Object.assign(this, props);
   }

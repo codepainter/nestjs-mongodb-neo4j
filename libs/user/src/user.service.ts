@@ -28,15 +28,6 @@ export class UserService implements IUserService {
     return user;
   }
 
-  async getAggregateByPhone(phone: string): Promise<User> {
-    this.logger.trace('getAggregateByPhone()');
-    this.logger.debug({ phone }, 'Phone');
-
-    const user = await this.useWriteRepo.findByPhone(phone);
-
-    return user;
-  }
-
   async getUserById(id: string): Promise<UserVM> {
     this.logger.trace('getUserById()');
     this.logger.debug({ id }, 'Id');
