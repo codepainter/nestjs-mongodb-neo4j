@@ -10,10 +10,12 @@ export abstract class QueryHandlerBase<TQuery, TResult = any>
   abstract handleQuery(query: TQuery): Promise<TResult>;
 
   async execute(query: TQuery): Promise<TResult> {
-    this.logger.info('execute()');
-    this.logger.debug({ query }, 'Query');
+    this.logger.trace('START');
+    this.logger.debug({ query }, 'Execute Query');
     try {
-      return await this.handleQuery(query);
+      const result = await this.handleQuery(query);
+      this.logger.trace('END');
+      return result;
     } catch (error) {
       this.logger.error({ error }, 'Query Handler Error Caught');
       throw error;

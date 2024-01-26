@@ -5,8 +5,8 @@ export interface IUserReadRepository {
    *
    *
    * @param {string} id
-   * @return {*}  {(Promise<UserVM | undefined>)}
+   * @return {*}  {(Promise<UserVM>)}
    * @memberof IUserReadRepository
    */
-  findById(id: string): Promise<UserVM | undefined>;
+  findById(id: string): Promise<UserVM>;
 }

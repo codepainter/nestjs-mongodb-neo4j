@@ -10,12 +10,10 @@ export abstract class EventHandlerBase<TEvent>
   abstract handleEvent(event: TEvent): Promise<void>;
 
   async handle(event: TEvent): Promise<void> {
-    this.logger.info('handle()');
-    this.logger.debug({ event }, 'Event');
+    this.logger.trace('BEGIN');
+    this.logger.debug({ event }, 'Handle Event');
     try {
-      this.logger.trace('BEGIN');
-
-      return await this.handleEvent(event);
+      await this.handleEvent(event);
       this.logger.trace('END');
     } catch (error) {
       this.logger.error({ error }, 'Event Handler Error Caught');

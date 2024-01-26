@@ -30,4 +30,8 @@ export class DateUtil {
       .startOf('second')
       .toFormat('HH:mm:ss');
   }
+
+  static isValid(date: Date): boolean {
+    return DateTime.fromJSDate(date).isValid;
+  }
 }

@@ -1,7 +1,7 @@
 import { PinoLogger } from 'nestjs-pino';
 import { createMock } from 'ts-auto-mock';
 
-import { UserVMStub } from '@app/test/stubs';
+import { UserVMStub } from '@app/test/user.stubs';
 import { UserNotFoundException } from '@app/user/errors/user.errors';
 import { IUserReadRepository } from '@app/user/interfaces/user.read-repository.interface';
 import { faker } from '@faker-js/faker';
@@ -27,7 +27,7 @@ describe('UserDetailQueryHandler', () => {
 
       const userReadRepoFindByIdSpy = jest
         .spyOn(userReadRepo, 'findById')
-        .mockResolvedValue(undefined);
+        .mockRejectedValue(new UserNotFoundException({ id: query.props.id }));
 
       const execute = queryHandler.handleQuery(query);
 

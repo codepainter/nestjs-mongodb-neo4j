@@ -5,7 +5,8 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { CreateUserCommandHandler } from './commands/create-user/create-user.command-handler';
 import { CreateUserController } from './controllers/create-user/create-user.controller';
 import { UserDetailsController } from './controllers/user-detail/user-detail.controller';
-import { UserCreatedEventHandler } from './domains/events/user-created/user-created.event-handler';
+import { UserSelfController } from './controllers/user-self/user-self.controller';
+import { UserLoggedInEventHandler } from './domains/events/user-logged-in/user-logged-in.event-handler';
 import { UserAggregateFactory } from './domains/user.factory';
 import { UserErrorInterceptor } from './interceptors/user.error-interceptor';
 import { UserDetailsQueryHandler } from './queries/user-detail/user-detail.query-handler';
@@ -26,7 +27,7 @@ const Domains: Provider[] = [
   },
 ];
 
-const EventHandlers: Provider[] = [UserCreatedEventHandler];
+const EventHandlers: Provider[] = [UserLoggedInEventHandler];
 
 const CommandHandlers: Provider[] = [CreateUserCommandHandler];
 
@@ -68,6 +69,11 @@ const Services: Provider[] = [
     ...Interceptors,
     ...Services,
   ],
-  controllers: [CreateUserController, UserDetailsController],
+  controllers: [
+    CreateUserController,
+    UserDetailsController,
+    UserSelfController,
+  ],
+  exports: [USER_SERVICE],
 })
 export class UserModule {}

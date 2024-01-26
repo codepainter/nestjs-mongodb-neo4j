@@ -1,6 +1,5 @@
 import { join, resolve } from 'path';
 
-import { ApiPostgresModule } from '@app/database/api-service/api-postgres.module';
 import { HealthModule } from '@app/health';
 import { LoggerModule } from '@app/logger';
 import { Environment } from '@app/shared/shared.constants';
@@ -9,6 +8,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
 import { AppConfigModule } from './config/config.module';
+import { ApiMongooseModule } from '@app/database/api-service/api-mongoose.module';
 
 @Module({
   imports: [
@@ -23,7 +23,7 @@ import { AppConfigModule } from './config/config.module';
     LoggerModule.init({
       exclude: ['health'],
     }),
-    ApiPostgresModule,
+    ApiMongooseModule,
     HealthModule,
     UserModule,
   ],

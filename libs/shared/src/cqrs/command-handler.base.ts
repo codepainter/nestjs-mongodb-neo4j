@@ -10,10 +10,12 @@ export abstract class CommandHandlerBase<TCommand, TResult = any>
   abstract handleCommand(command: TCommand): Promise<TResult>;
 
   async execute(command: TCommand): Promise<TResult> {
-    this.logger.info('execute()');
-    this.logger.debug({ command }, 'Command');
+    this.logger.trace('START');
+    this.logger.debug({ command }, 'Execute Command');
     try {
-      return await this.handleCommand(command);
+      const result = await this.handleCommand(command);
+      this.logger.trace('END');
+      return result;
     } catch (error) {
       this.logger.error({ error }, 'Command Handler Error Caught');
       throw error;

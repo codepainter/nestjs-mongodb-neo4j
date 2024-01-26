@@ -1,21 +1,28 @@
+import { InvalidPasswordException } from '@app/auth/errors/auth.error';
 import { AggregateRootBase } from '@app/shared/cqrs/aggregate-root.base';
+import { PasswordUtil } from '@app/shared/utils/password.util';
 
-import { UserCreatedEvent } from './events/user-created/user-created.event';
+import { UserLoggedInEvent } from './events/user-logged-in/user-logged-in.event';
+import { UserLoggedOutEvent } from './events/user-logged-out/user-logged-out.event';
 
-export type UserRequiredProps = {
+export type UserRequiredProps = Required<{
   id: string;
-  firstName: string;
-  lastName: string;
+  name: string;
+  email: string;
+  phone: string;
+  password: string;
   createdAt: Date;
   updatedAt: Date;
-};
+}>;
 
 export type UserOptionalProps = Partial<{
-  bio: string;
+  coachName: string;
+  coachPhone: string;
+  platinumName: string;
   deletedAt: Date;
 }>;
 
-export type UserProps = UserRequiredProps & Required<UserOptionalProps>;
+export type UserProps = UserRequiredProps & UserOptionalProps;
 
 export type CreateUserProps = Omit<
   UserProps,
@@ -23,21 +30,31 @@ export type CreateUserProps = Omit<
 >;
 
 export type UserUpdatableProps = Partial<{
-  firstName: string;
-  lastName: string;
-  bio: string;
+  name: string;
+  email: string;
+  phone: string;
+  coachName: string;
+  coachPhone: string;
+  platinumName: string;
+  password: string;
   updatedAt: Date;
 }>;
 
 export interface User {
+  loginWithPassword: (password: string) => void;
+  props: () => UserProps;
   commit: () => void;
 }
 
 export class UserAggregate extends AggregateRootBase implements User {
   private readonly id: string;
-  private firstName: string;
-  private lastName: string;
-  private bio: string;
+  private email: string;
+  private name: string;
+  private phone: string;
+  private coachName?: string;
+  private coachPhone?: string;
+  private platinumName?: string;
+  private password: string;
 
   private readonly createdAt: Date;
   private updatedAt: Date;
@@ -48,16 +65,28 @@ export class UserAggregate extends AggregateRootBase implements User {
     Object.assign(this, props);
   }
 
-  create(): void {
-    this.apply(new UserCreatedEvent(this.props()));
+  loginWithPassword(password: string): void {
+    const valid = PasswordUtil.compare(password, this.password);
+    if (!valid) {
+      throw new InvalidPasswordException();
+    }
+    this.apply(new UserLoggedInEvent({ id: this.id, email: this.email }));
+  }
+
+  logout(): void {
+    this.apply(new UserLoggedOutEvent({ id: this.id, email: this.email }));
   }
 
   props() {
     return {
       id: this.id,
-      firstName: this.firstName,
-      lastName: this.lastName,
-      bio: this.bio,
+      name: this.name,
+      email: this.email,
+      phone: this.phone,
+      coachName: this.coachName,
+      coachPhone: this.coachPhone,
+      platinumName: this.platinumName,
+      password: this.password,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       deletedAt: this.deletedAt,

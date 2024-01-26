@@ -1,6 +1,6 @@
 import { registerAs } from '@nestjs/config';
 
-export default registerAs('api-postgres', () => ({
+export default registerAs('api-mongoose', () => ({
   env: process.env.NODE_ENV,
-  url: process.env.PG_DATABASE_URL,
+  uri: process.env.MONGO_DATABASE_URI,
 }));

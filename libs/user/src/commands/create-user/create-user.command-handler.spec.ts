@@ -1,7 +1,7 @@
 import { PinoLogger } from 'nestjs-pino';
 import { createMock } from 'ts-auto-mock';
 
-import { UserAggregateStub } from '@app/test/stubs';
+import { UserAggregateStub } from '@app/test/user.stubs';
 import { UserAggregate } from '@app/user/domains/user.aggregate';
 import { UserAggregateFactory } from '@app/user/domains/user.factory';
 import { IUserWriteRepository } from '@app/user/interfaces/user.write-repository.interface';
@@ -32,14 +32,12 @@ describe('CreateUserCommandHandler', () => {
         .spyOn(factory, 'create')
         .mockReturnValueOnce(UserAggregateStub());
 
-      const userCreateSpy = jest.spyOn(UserAggregate.prototype, 'create');
       const userCommitSpy = jest.spyOn(UserAggregate.prototype, 'commit');
 
       const execute = commandHandler.handleCommand(command);
 
       await expect(execute).resolves.toBeInstanceOf(CreateUserResult);
       expect(factoryCreateSpy).toBeCalledWith(command.props);
-      expect(userCreateSpy).toBeCalledTimes(1);
       expect(userCommitSpy).toBeCalledTimes(1);
     });
   });

@@ -4,7 +4,7 @@ import { UserVM } from '@app/user/vms/user.vm';
 
 export class UserDetailsResult extends ResultBase<UserVM> {
   code = UserCodes.DETAILS;
-  message = 'User details';
+  message = 'User Details';
 
   constructor(props: UserVM) {
     super(props);

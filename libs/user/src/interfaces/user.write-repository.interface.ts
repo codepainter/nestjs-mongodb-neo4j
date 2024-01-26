@@ -1,8 +1,4 @@
-import {
-  UserAggregate,
-  UserProps,
-  UserUpdatableProps,
-} from '../domains/user.aggregate';
+import { User, UserProps, UserUpdatableProps } from '../domains/user.aggregate';
 
 export interface IUserWriteRepository {
   /**
@@ -18,10 +14,28 @@ export interface IUserWriteRepository {
    *
    *
    * @param {string} id
-   * @return {*}  {(Promise<UserAggregate | undefined>)}
+   * @return {*}  {(Promise<User>)}
    * @memberof IUserWriteRepository
    */
-  findById(id: string): Promise<UserAggregate | undefined>;
+  findById(id: string): Promise<User>;
+
+  /**
+   *
+   *
+   * @param {string} email
+   * @return {*}  {Promise<User>}
+   * @memberof IUserWriteRepository
+   */
+  findByEmail(email: string): Promise<User>;
+
+  /**
+   *
+   *
+   * @param {string} phone
+   * @return {*}  {Promise<User>}
+   * @memberof IUserWriteRepository
+   */
+  findByPhone(phone: string): Promise<User>;
 
   /**
    *

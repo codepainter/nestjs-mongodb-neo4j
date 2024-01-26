@@ -19,12 +19,13 @@ export class CreateUserController {
   @Post('user.create')
   @ApiTags('user')
   @ApiOperation({
+    operationId: 'user.create',
     summary: 'Create a new user',
     description: 'Create a new user',
   })
   @ApiOkResponse(apiOkResponseSchema)
   async createUser(@Body() body: CreateUserRequestBodyDto) {
-    this.logger.info('createUser()');
+    this.logger.trace('createUser()');
     this.logger.debug({ body }, 'Body');
 
     const command = new CreateUserCommand(body);

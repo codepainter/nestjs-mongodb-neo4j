@@ -3,13 +3,17 @@ import { catchError, Observable, throwError } from 'rxjs';
 
 import {
   CallHandler,
+  ConflictException,
   ExecutionContext,
   Injectable,
   NestInterceptor,
   NotFoundException,
 } from '@nestjs/common';
 
-import { UserNotFoundException } from '../errors/user.errors';
+import {
+  DuplicateKeyException,
+  UserNotFoundException,
+} from '../errors/user.errors';
 
 @Injectable()
 export class UserErrorInterceptor implements NestInterceptor {
@@ -29,6 +33,8 @@ export class UserErrorInterceptor implements NestInterceptor {
         switch (error.constructor) {
           case UserNotFoundException:
             return throwError(() => new NotFoundException(error.toJSON()));
+          case DuplicateKeyException:
+            return throwError(() => new ConflictException(error.toJSON()));
 
           default:
             return throwError(() => error);
