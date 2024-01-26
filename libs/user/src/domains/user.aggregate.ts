@@ -1,9 +1,4 @@
-import { InvalidPasswordException } from '@app/auth/errors/auth.error';
 import { AggregateRootBase } from '@app/shared/cqrs/aggregate-root.base';
-import { PasswordUtil } from '@app/shared/utils/password.util';
-
-import { UserLoggedInEvent } from './events/user-logged-in/user-logged-in.event';
-import { UserLoggedOutEvent } from './events/user-logged-out/user-logged-out.event';
 
 export type UserRequiredProps = Required<{
   id: string;
@@ -41,7 +36,6 @@ export type UserUpdatableProps = Partial<{
 }>;
 
 export interface User {
-  loginWithPassword: (password: string) => void;
   props: () => UserProps;
   commit: () => void;
 }
@@ -63,18 +57,6 @@ export class UserAggregate extends AggregateRootBase implements User {
   constructor(props: UserProps) {
     super();
     Object.assign(this, props);
-  }
-
-  loginWithPassword(password: string): void {
-    const valid = PasswordUtil.compare(password, this.password);
-    if (!valid) {
-      throw new InvalidPasswordException();
-    }
-    this.apply(new UserLoggedInEvent({ id: this.id, email: this.email }));
-  }
-
-  logout(): void {
-    this.apply(new UserLoggedOutEvent({ id: this.id, email: this.email }));
   }
 
   props() {
