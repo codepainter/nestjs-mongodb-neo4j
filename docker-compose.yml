@@ -1,0 +1,47 @@
+version: '2'
+
+services:
+  api-service:
+    image: nestjs-backend-template-v2/api-service:dev
+    build:
+      context: .
+      dockerfile: apps/api-service/Dockerfile
+    env_file:
+      - apps/api-service/.env
+    environment:
+      - NODE_ENV=production
+      - PG_DATABASE_URL=postgresql://postgres:@postgresql:5432/nestjs_backend_template_v2
+      # - REDIS_CACHE_URL=redis://redis-cache:6379
+    ports:
+      # Exposed:container
+      - '3000:3000'
+    depends_on:
+      - postgresql
+      # - redis-cache
+
+  postgresql:
+    image: docker.io/bitnami/postgresql:15
+    ports:
+      # I use 54321 instead of 5432 to avoid conflicts with my local postgresql
+      # Exposed:container
+      - '15432:5432'
+    volumes:
+      - 'postgresql_data:/bitnami/postgresql'
+    environment:
+      - 'ALLOW_EMPTY_PASSWORD=yes'
+      - 'POSTGRESQL_DATABASE=nestjs_backend_template_v2'
+
+  # redis-cache:
+  #   image: docker.io/bitnami/redis:7.0
+  #   environment:
+  #     # ALLOW_EMPTY_PASSWORD is recommended only for development.
+  #     - ALLOW_EMPTY_PASSWORD=yes
+  #     - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+  #   ports:
+  #     - '16379:6379'
+  #   volumes:
+  #     - 'redis_cache_data:/bitnami/redis/data'
+
+volumes:
+  postgresql_data:
+  # redis_cache_data:

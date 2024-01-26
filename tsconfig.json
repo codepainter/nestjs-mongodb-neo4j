@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2017",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@app/database": ["libs/database/src"],
+      "@app/database/*": ["libs/database/src/*"],
+      "@app/logger": ["libs/logger/src"],
+      "@app/logger/*": ["libs/logger/src/*"],
+      "@app/shared": ["libs/shared/src"],
+      "@app/shared/*": ["libs/shared/src/*"],
+      "@app/health": ["libs/health/src"],
+      "@app/health/*": ["libs/health/src/*"],
+      "@app/user": ["libs/user/src"],
+      "@app/user/*": ["libs/user/src/*"],
+      "@app/test": ["libs/test/src"],
+      "@app/test/*": ["libs/test/src/*"]
+    },
+    "plugins": [
+      {
+        "transform": "ts-auto-mock/transformer",
+        "cacheBetweenTests": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,45 @@
+name: Test Coverage
+on:
+  pull_request:
+    branches:
+      - development
+
+jobs:
+  test:
+    name: Test on Node ${{ matrix.node }}
+    runs-on: ubuntu-latest
+    env:
+      HUSKY: 0
+    strategy:
+      matrix:
+        node: [18, 19, 20]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run Test Coverage
+        run: yarn test:cov --runInBand | tee ./coverage.txt
+
+      - name: Jest Coverage Comment
+        id: coverageComment
+        uses: MishaKav/jest-coverage-comment@main
+        with:
+          title: Jest Coverage for v${{ matrix.node }}
+          summary-title: Summary
+          coverage-summary-path: ./coverage/coverage-summary.json
+          badge-title: Coverage
+          hide-comment: false
+          create-new-comment: false
+          hide-summary: false
+          coverage-title: Coverage
+          coverage-path: ./coverage.txt
+          unique-id-for-comment: ${{ matrix.node }}
