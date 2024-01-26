@@ -5,11 +5,11 @@ import { ConfigService, ConfigType } from '@nestjs/config';
 import config from './config';
 
 @Injectable()
-export class ApiMongooseConfigService {
+export class MongoDBConfigService {
   private config: ConfigType<typeof config>;
 
   constructor(private readonly configService: ConfigService) {
-    this.config = this.configService.get('api-mongoose');
+    this.config = this.configService.get('mongodb');
   }
 
   get uri(): string {

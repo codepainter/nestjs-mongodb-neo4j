@@ -4,7 +4,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
 import config from './config';
-import { ApiMongooseConfigService as ApiMongooseConfigService } from './config.service';
+import { MongoDBConfigService } from './config.service';
 
 @Module({
   imports: [
@@ -19,7 +19,7 @@ import { ApiMongooseConfigService as ApiMongooseConfigService } from './config.s
       },
     }),
   ],
-  providers: [ApiMongooseConfigService],
-  exports: [ApiMongooseConfigService],
+  providers: [MongoDBConfigService],
+  exports: [MongoDBConfigService],
 })
-export class ApiMongooseConfigModule {}
+export class MongoDBConfigModule {}

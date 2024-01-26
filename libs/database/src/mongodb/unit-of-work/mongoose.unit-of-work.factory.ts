@@ -8,7 +8,7 @@ import {
 import { Injectable } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 
-import { API_DB_CONNECTION } from '../mongodb.constants';
+import { MONGODB_CONNECTION } from '../mongodb.constants';
 import { MongooseUnitOfWork } from './mongoose.unit-or-work';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class MongooseUnitOfWorkFactory implements IUnitOfWorkFactory {
   constructor(
     @InjectPinoLogger(MongooseUnitOfWorkFactory.name)
     readonly logger: PinoLogger,
-    @InjectConnection(API_DB_CONNECTION)
+    @InjectConnection(MONGODB_CONNECTION)
     private readonly connection: Connection,
   ) {}
 

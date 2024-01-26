@@ -1,6 +1,7 @@
 import { join, resolve } from 'path';
 
 import { MongoDBModule } from '@app/database/mongodb/mongodb.module';
+import { Neo4jModule } from '@app/database/neo4j/neo4j.module';
 import { HealthModule } from '@app/health';
 import { LoggerModule } from '@app/logger';
 import { Environment } from '@app/shared/shared.constants';
@@ -24,6 +25,7 @@ import { AppConfigModule } from './config/config.module';
       exclude: ['health'],
     }),
     MongoDBModule,
+    Neo4jModule,
     HealthModule,
     UserModule,
   ],

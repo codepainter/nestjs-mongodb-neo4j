@@ -2,7 +2,7 @@ import { Connection } from 'mongoose';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
 import {
-  API_DB_CONNECTION,
+  MONGODB_CONNECTION,
   USER_MODEL,
 } from '@app/database/mongodb/mongodb.constants';
 import {
@@ -23,7 +23,7 @@ export class UserReadRepository implements IUserReadRepository {
 
   constructor(
     @InjectPinoLogger(UserReadRepository.name) readonly logger: PinoLogger,
-    @InjectConnection(API_DB_CONNECTION) readonly connection: Connection,
+    @InjectConnection(MONGODB_CONNECTION) readonly connection: Connection,
   ) {
     this.model = this.connection.model(USER_MODEL, UserSchema);
   }
