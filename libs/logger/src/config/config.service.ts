@@ -27,4 +27,8 @@ export class LoggerConfigService {
   get isProduction(): boolean {
     return this.config.env === Environment.Production;
   }
+
+  get isLocal(): boolean {
+    return this.config.env === Environment.Local;
+  }
 }

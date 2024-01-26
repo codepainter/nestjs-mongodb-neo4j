@@ -4,14 +4,14 @@ export class UserVM {
   @Expose({ name: 'id' })
   id: string;
 
-  @Expose({ name: 'first_name' })
-  firstName: string;
+  @Expose({ name: 'name' })
+  name: string;
 
-  @Expose({ name: 'last_name' })
-  lastName: string;
+  @Expose({ name: 'email' })
+  email: string;
 
-  @Expose({ name: 'bio' })
-  bio: string;
+  @Expose({ name: 'phone' })
+  phone: string;
 
   constructor(props: UserVM) {
     Object.assign(this, props);

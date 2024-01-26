@@ -8,6 +8,7 @@ import { Module } from '@nestjs/common';
 import { LoggerConfigModule } from './config/config.module';
 import { LoggerConfigService } from './config/config.service';
 import { ExpressRequest, ExpressResponse } from './interfaces/logger.interface';
+import { LogLevel } from './logger.constants';
 
 export type LoggerModuleOptions = {
   exclude?: string[];
@@ -24,7 +25,7 @@ export class LoggerModule {
           imports: [LoggerConfigModule],
           inject: [LoggerConfigService],
           useFactory: (config: LoggerConfigService) => ({
-            pinoHttp: this.generatePinoOptions(config),
+            pinoHttp: this.generatePinoHttpOptions(config),
             exclude: options ? options.exclude : undefined,
           }),
         }),
@@ -32,7 +33,8 @@ export class LoggerModule {
     };
   }
 
-  static generatePinoOptions(config: LoggerConfigService): Options {
+  static generatePinoHttpOptions(config: LoggerConfigService): Options {
+    const isLocal = config.isLocal;
     const isProduction = config.isProduction;
 
     const genReqId = (req, res) => {
@@ -90,15 +92,15 @@ export class LoggerModule {
 
     return {
       enabled: !config.isTest,
-      level: config.level,
-      transport: !isProduction ? { target: 'pino-pretty' } : undefined,
+      level: isProduction ? LogLevel.Info : config.level,
+      transport: isLocal ? { target: 'pino-pretty' } : undefined,
       genReqId,
       serializers,
       customSuccessMessage,
       customReceivedMessage,
       customErrorMessage,
       customAttributeKeys,
-      quietReqLogger: !isProduction,
+      quietReqLogger: isLocal,
     };
   }
 }

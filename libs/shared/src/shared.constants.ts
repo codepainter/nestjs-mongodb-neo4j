@@ -5,3 +5,7 @@ export enum Environment {
   Test = 'test',
   Staging = 'staging',
 }
+
+export enum TYPES {
+  AsyncDatabaseConnection = 'AsyncDatabaseConnection',
+}

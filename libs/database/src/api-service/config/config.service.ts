@@ -5,15 +5,15 @@ import { ConfigService, ConfigType } from '@nestjs/config';
 import config from './config';
 
 @Injectable()
-export class ApiPostgresConfigService {
+export class ApiMongooseConfigService {
   private config: ConfigType<typeof config>;
 
   constructor(private readonly configService: ConfigService) {
-    this.config = this.configService.get('api-postgres');
+    this.config = this.configService.get('api-mongoose');
   }
 
-  get url(): string {
-    return this.config.url;
+  get uri(): string {
+    return this.config.uri;
   }
 
   get isProduction(): boolean {

@@ -50,4 +50,12 @@ describe('Date Utils', () => {
       expect(timeOnly).toEqual('12:00:00');
     });
   });
+
+  describe('isValid', () => {
+    it('should return true if date is valid', () => {
+      const date = new Date('2020-01-01T12:00:00.000Z');
+      const isValid = DateUtil.isValid(date);
+      expect(isValid).toEqual(true);
+    });
+  });
 });

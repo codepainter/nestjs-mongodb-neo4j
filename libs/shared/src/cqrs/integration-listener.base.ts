@@ -10,11 +10,12 @@ export abstract class IntegrationListenerBase<TEvent>
   abstract handleIntegrationEvent(event: TEvent): void;
 
   async handle(integrationEvent: TEvent): Promise<void> {
-    this.logger.info('handle()');
+    this.logger.trace('BEGIN');
     this.logger.debug({ integrationEvent }, 'Integration Event');
-
     try {
-      return await this.handleIntegrationEvent(integrationEvent);
+      const result = await this.handleIntegrationEvent(integrationEvent);
+      this.logger.trace('END');
+      return result;
     } catch (error) {
       this.logger.error({ error }, 'Integration Listener Error Caught');
       throw error;

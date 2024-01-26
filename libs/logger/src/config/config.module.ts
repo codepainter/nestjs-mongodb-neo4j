@@ -1,6 +1,5 @@
 import * as Joi from 'joi';
 
-import { validate } from '@app/shared/config/validate';
 import { Environment } from '@app/shared/shared.constants';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
@@ -14,13 +13,17 @@ import { LoggerConfigService } from './config.service';
     ConfigModule.forRoot({
       load: [config],
       validationSchema: Joi.object({
-        NODE_ENV: Joi.string().valid(...Object.values(Environment)),
+        NODE_ENV: Joi.string()
+          .valid(...Object.values(Environment))
+          .default(Environment.Development),
         LOG_LEVEL: Joi.string().valid(...Object.values(LogLevel)),
       }),
       validationOptions: {
         allowUnknown: true,
       },
-      validate,
+      validate: async () => {
+        await ConfigModule.envVariablesLoaded;
+      },
     }),
   ],
   providers: [LoggerConfigService],

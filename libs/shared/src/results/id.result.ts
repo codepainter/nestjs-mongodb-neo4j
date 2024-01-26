@@ -1,14 +1,12 @@
 import { ResultBase } from '@app/shared/results/result.base';
 
-type IdResultProps = {
-  id: string;
-};
+import { IdVM } from '../vms/id.vm';
 
-export class IdResult extends ResultBase<IdResultProps> {
+export class IdResult extends ResultBase<IdVM> {
   code = 'GENERIC.ID_SUCCESS';
   message = 'Id Success';
 
-  constructor(props: IdResultProps) {
+  constructor(props: IdVM) {
     super(props);
   }
 }

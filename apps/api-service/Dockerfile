@@ -1,5 +1,5 @@
 # docker build -f apps/api-service/Dockerfile . -t api-service:dev
-FROM node:16-alpine AS install
+FROM node:20-alpine AS install
 WORKDIR /app
 COPY nest-cli.json package.json yarn.lock tsconfig.json tsconfig.build.json ./
 RUN yarn install --frozen-lockfile
@@ -25,7 +25,7 @@ COPY libs ./libs
 RUN yarn build api-service
 
 # Run-time stage
-FROM mhart/alpine-node:slim-16 AS runtime
+FROM node:20-alpine AS runtime
 
 WORKDIR /app
 

@@ -1,9 +1,13 @@
 import { CommandBase } from '@app/shared/cqrs/command.base';
 
 type CreateUserCommandProps = {
-  firstName: string;
-  lastName: string;
-  bio: string;
+  name: string;
+  email: string;
+  phone: string;
+  password: string;
+  coachName?: string;
+  coachPhone?: string;
+  platinumName?: string;
 };
 
 export class CreateUserCommand extends CommandBase<CreateUserCommandProps> {

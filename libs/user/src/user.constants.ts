@@ -10,4 +10,5 @@ export enum UserCodes {
 
 export enum UserErrorCodes {
   NOT_FOUND = 'USER.NOT_FOUND',
+  DUPLICATE_KEY = 'USER.DUPLICATE_KEY',
 }

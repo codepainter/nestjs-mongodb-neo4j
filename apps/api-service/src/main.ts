@@ -24,8 +24,8 @@ async function bootstrap() {
 
   if (!appConfig.isProduction) {
     const swaggerConfig = new DocumentBuilder()
-      .setTitle('Api Service')
-      .setDescription('The API Service description')
+      .setTitle('NestJS MongoDB Neo4j Api Service')
+      .setDescription('NestJS MongoDB Neo4j Api Service')
       .setVersion('0.0.1')
       .build();
     const document = SwaggerModule.createDocument(app, swaggerConfig);
