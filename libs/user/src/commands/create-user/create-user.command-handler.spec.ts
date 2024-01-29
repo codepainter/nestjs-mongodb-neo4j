@@ -1,6 +1,7 @@
 import { PinoLogger } from 'nestjs-pino';
 import { createMock } from 'ts-auto-mock';
 
+import { IUnitOfWorkFactory } from '@app/shared/unit-or-work/unit-of-work.interface';
 import { UserAggregateStub } from '@app/test/user.stubs';
 import { UserAggregate } from '@app/user/domains/user.aggregate';
 import { UserAggregateFactory } from '@app/user/domains/user.factory';
@@ -17,12 +18,14 @@ describe('CreateUserCommandHandler', () => {
   const userWriteRepo = createMock<IUserMongooseWriteRepository>();
   const neo4jWriteRepository: IUserNeo4jWriteRepository =
     createMock<IUserNeo4jWriteRepository>();
+  const neo4jUowJFactory: IUnitOfWorkFactory = createMock<IUnitOfWorkFactory>();
 
   const commandHandler = new CreateUserCommandHandler(
     logger,
     factory,
     userWriteRepo,
     neo4jWriteRepository,
+    neo4jUowJFactory,
   );
 
   afterEach(() => {

@@ -1,9 +1,9 @@
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
+import { UserNode } from '@app/database/neo4j/nodes/user.node';
 import { Inject, Injectable } from '@nestjs/common';
 import { Neo4jService, Query } from '@nhogs/nestjs-neo4j';
 
-import { UserProps } from '../domains/user.aggregate';
 import { IUserNeo4jWriteRepository } from '../interfaces/user.neo4j.write-repository';
 
 @Injectable()
@@ -14,11 +14,11 @@ export class UserNeo4jWriteRepository implements IUserNeo4jWriteRepository {
     @Inject(Neo4jService) readonly neo4jService: Neo4jService,
   ) {}
 
-  async createNode(props: UserProps): Promise<void> {
+  async createNode(props: UserNode): Promise<void> {
     this.logger.trace(`createNode()`);
     this.logger.debug({ props }, 'Props');
 
-    const query: Query<UserProps> = {
+    const query: Query<UserNode> = {
       cypher: `
         CREATE (user:User {id: $id, name: $name, email: $email})
         RETURN user`,
