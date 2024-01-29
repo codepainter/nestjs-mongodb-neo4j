@@ -2,13 +2,13 @@ import { Expose } from 'class-transformer';
 
 export class UserVM {
   @Expose({ name: 'id' })
-  id: string;
+  readonly id: string;
 
   @Expose({ name: 'name' })
-  name: string;
+  readonly name: string;
 
   @Expose({ name: 'email' })
-  email: string;
+  readonly email: string;
 
   constructor(props: UserVM) {
     Object.assign(this, props);

@@ -4,7 +4,8 @@ import { createMock } from 'ts-auto-mock';
 import { UserAggregateStub } from '@app/test/user.stubs';
 import { UserAggregate } from '@app/user/domains/user.aggregate';
 import { UserAggregateFactory } from '@app/user/domains/user.factory';
-import { IUserWriteRepository } from '@app/user/interfaces/user.write-repository.interface';
+import { IUserMongooseWriteRepository } from '@app/user/interfaces/user.mongoose.write-repository.interface';
+import { IUserNeo4jWriteRepository } from '@app/user/interfaces/user.neo4j.write-repository';
 
 import { CreateUserCommand } from './create-user.command';
 import { CreateUserCommandHandler } from './create-user.command-handler';
@@ -13,11 +14,15 @@ import { CreateUserResult } from './create-user.result';
 describe('CreateUserCommandHandler', () => {
   const logger = createMock<PinoLogger>();
   const factory = createMock<UserAggregateFactory>();
-  const userWriteRepo = createMock<IUserWriteRepository>();
+  const userWriteRepo = createMock<IUserMongooseWriteRepository>();
+  const neo4jWriteRepository: IUserNeo4jWriteRepository =
+    createMock<IUserNeo4jWriteRepository>();
+
   const commandHandler = new CreateUserCommandHandler(
     logger,
     factory,
     userWriteRepo,
+    neo4jWriteRepository,
   );
 
   afterEach(() => {

@@ -2,9 +2,11 @@ import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
 import { CommandHandlerBase } from '@app/shared/cqrs/command-handler.base';
 import { UserAggregateFactory } from '@app/user/domains/user.factory';
-import { IUserWriteRepository } from '@app/user/interfaces/user.write-repository.interface';
+import { IUserMongooseWriteRepository } from '@app/user/interfaces/user.mongoose.write-repository.interface';
+import { IUserNeo4jWriteRepository } from '@app/user/interfaces/user.neo4j.write-repository';
 import {
   USER_AGGREGATE_FACTORY,
+  USER_NEO4J_WRITE_REPOSITORY,
   USER_WRITE_REPOSITORY,
 } from '@app/user/user.constants';
 import { Inject } from '@nestjs/common';
@@ -22,7 +24,10 @@ export class CreateUserCommandHandler extends CommandHandlerBase<
     @InjectPinoLogger(CreateUserCommandHandler.name)
     readonly logger: PinoLogger,
     @Inject(USER_AGGREGATE_FACTORY) readonly factory: UserAggregateFactory,
-    @Inject(USER_WRITE_REPOSITORY) readonly userWriteRepo: IUserWriteRepository,
+    @Inject(USER_WRITE_REPOSITORY)
+    readonly userWriteRepo: IUserMongooseWriteRepository,
+    @Inject(USER_NEO4J_WRITE_REPOSITORY)
+    readonly neo4jWriteRepository: IUserNeo4jWriteRepository,
   ) {
     super(logger);
   }
@@ -35,6 +40,8 @@ export class CreateUserCommandHandler extends CommandHandlerBase<
     });
 
     await this.userWriteRepo.create(user.props());
+
+    await this.neo4jWriteRepository.createNode(user.props());
 
     user.commit();
 

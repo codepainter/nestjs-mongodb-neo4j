@@ -9,10 +9,12 @@ import { UserLoggedInEventHandler } from './domains/events/user-logged-in/user-l
 import { UserAggregateFactory } from './domains/user.factory';
 import { UserErrorInterceptor } from './interceptors/user.error-interceptor';
 import { UserDetailsQueryHandler } from './queries/user-detail/user-detail.query-handler';
-import { UserReadRepository } from './repositories/user.read-repository';
-import { UserWriteRepository } from './repositories/user.write-repository';
+import { UserMongooseReadRepository } from './repositories/user.mongoose.read-repository';
+import { UserMongooseWriteRepository } from './repositories/user.mongoose.write-repository';
+import { UserNeo4jWriteRepository } from './repositories/user.neo4j.write-repository';
 import {
   USER_AGGREGATE_FACTORY,
+  USER_NEO4J_WRITE_REPOSITORY,
   USER_READ_REPOSITORY,
   USER_SERVICE,
   USER_WRITE_REPOSITORY,
@@ -35,11 +37,15 @@ const QueryHandlers: Provider[] = [UserDetailsQueryHandler];
 const Repositories: Provider[] = [
   {
     provide: USER_WRITE_REPOSITORY,
-    useClass: UserWriteRepository,
+    useClass: UserMongooseWriteRepository,
   },
   {
     provide: USER_READ_REPOSITORY,
-    useClass: UserReadRepository,
+    useClass: UserMongooseReadRepository,
+  },
+  {
+    provide: USER_NEO4J_WRITE_REPOSITORY,
+    useClass: UserNeo4jWriteRepository,
   },
 ];
 

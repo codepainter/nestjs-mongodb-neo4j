@@ -3,7 +3,7 @@ import { createMock } from 'ts-auto-mock';
 
 import { UserVMStub } from '@app/test/user.stubs';
 import { UserNotFoundException } from '@app/user/errors/user.errors';
-import { IUserReadRepository } from '@app/user/interfaces/user.read-repository.interface';
+import { IUserMongooseReadRepository } from '@app/user/interfaces/user.mongoose.read-repository.interface';
 import { faker } from '@faker-js/faker';
 
 import { UserDetailsQuery } from './user-detail.query';
@@ -12,7 +12,7 @@ import { UserDetailsResult } from './user-detail.result';
 
 describe('UserDetailQueryHandler', () => {
   const logger = createMock<PinoLogger>();
-  const userReadRepo = createMock<IUserReadRepository>();
+  const userReadRepo = createMock<IUserMongooseReadRepository>();
   const queryHandler = new UserDetailsQueryHandler(logger, userReadRepo);
 
   afterEach(() => {

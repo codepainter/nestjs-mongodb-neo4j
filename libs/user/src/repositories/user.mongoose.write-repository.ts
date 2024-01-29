@@ -19,19 +19,18 @@ import {
   DuplicateKeyException,
   UserNotFoundException,
 } from '../errors/user.errors';
-import { IUserWriteRepository } from '../interfaces/user.write-repository.interface';
+import { IUserMongooseWriteRepository } from '../interfaces/user.mongoose.write-repository.interface';
 import { USER_AGGREGATE_FACTORY } from '../user.constants';
 
 @Injectable()
-export class UserWriteRepository implements IUserWriteRepository {
-  public get logger(): PinoLogger {
-    return this._logger;
-  }
+export class UserMongooseWriteRepository
+  implements IUserMongooseWriteRepository
+{
   private model: UserModel;
 
   constructor(
-    @InjectPinoLogger(UserWriteRepository.name)
-    private readonly _logger: PinoLogger,
+    @InjectPinoLogger(UserMongooseWriteRepository.name)
+    private readonly logger: PinoLogger,
     @InjectConnection(MONGODB_CONNECTION) readonly connection: Connection,
     @Inject(USER_AGGREGATE_FACTORY) readonly factory: UserAggregateFactory,
   ) {

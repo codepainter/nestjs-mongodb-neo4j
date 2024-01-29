@@ -41,7 +41,7 @@ services:
       - MONGO_INITDB_DATABASE=nestjs-mongodb-neo4j
 
   neo4j:
-    image: docker.io/bitnami/neo4j:5
+    image: bitnami/neo4j:5.16.0
     environment:
       - NEO4J_PASSWORD=password
     ports:
