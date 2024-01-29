@@ -27,7 +27,7 @@ export class CreateUserCommandHandler extends CommandHandlerBase<
     @Inject(USER_WRITE_REPOSITORY)
     readonly userWriteRepo: IUserMongooseWriteRepository,
     @Inject(USER_NEO4J_WRITE_REPOSITORY)
-    readonly neo4jWriteRepository: IUserNeo4jWriteRepository,
+    readonly neo4jWriteRepository: IUserNeo4jWriteRepository, // @Inject(NEO4J_UNIT_OF_WORK_FACTORY) // readonly neo4jUowJFactory: IUnitOfWorkFactory,
   ) {
     super(logger);
   }

@@ -32,11 +32,5 @@ export class UserNeo4jWriteRepository implements IUserNeo4jWriteRepository {
     await this.neo4jService.run(query, {
       write: true,
     });
-    // .then((result) => {
-    //   result.records.forEach((record) => {
-    //     const obj = record.toObject().user;
-    //     this.logger.debug({ record: obj }, 'Record');
-    //   });
-    // });
   }
 }
