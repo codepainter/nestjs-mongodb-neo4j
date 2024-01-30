@@ -1,15 +1,11 @@
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
-import { NEO4J_UNIT_OF_WORK_FACTORY } from '@app/database/neo4j/neo4j.constants';
 import { CommandHandlerBase } from '@app/shared/cqrs/command-handler.base';
-import { IUnitOfWorkFactory } from '@app/shared/unit-or-work/unit-of-work.interface';
 import { UserAggregateFactory } from '@app/user/domains/user.factory';
-import { IUserMongooseWriteRepository } from '@app/user/interfaces/user.mongoose.write-repository.interface';
-import { IUserNeo4jWriteRepository } from '@app/user/interfaces/user.neo4j.write-repository';
+import { IUserMongooseReadRepository } from '@app/user/interfaces/user.mongoose.read-repository.interface';
 import {
   USER_AGGREGATE_FACTORY,
-  USER_NEO4J_WRITE_REPOSITORY,
-  USER_WRITE_REPOSITORY,
+  USER_READ_REPOSITORY,
 } from '@app/user/user.constants';
 import { Inject } from '@nestjs/common';
 import { CommandHandler } from '@nestjs/cqrs';
@@ -26,12 +22,8 @@ export class CreateUserCommandHandler extends CommandHandlerBase<
     @InjectPinoLogger(CreateUserCommandHandler.name)
     readonly logger: PinoLogger,
     @Inject(USER_AGGREGATE_FACTORY) readonly factory: UserAggregateFactory,
-    @Inject(USER_WRITE_REPOSITORY)
-    readonly userWriteRepo: IUserMongooseWriteRepository,
-    @Inject(USER_NEO4J_WRITE_REPOSITORY)
-    readonly neo4jWriteRepository: IUserNeo4jWriteRepository,
-    @Inject(NEO4J_UNIT_OF_WORK_FACTORY)
-    readonly neo4jUowJFactory: IUnitOfWorkFactory,
+    @Inject(USER_READ_REPOSITORY)
+    readonly userReadRepo: IUserMongooseReadRepository,
   ) {
     super(logger);
   }
@@ -43,16 +35,25 @@ export class CreateUserCommandHandler extends CommandHandlerBase<
       password: command.props.password,
     });
 
-    await this.userWriteRepo.create(user.props());
+    user.create();
 
-    const uow = this.neo4jUowJFactory.makeUnitOfWork('CreateUserUow');
+    const randomUser = await this.userReadRepo.findRandom();
+    this.logger.debug({ randomUser }, 'randomUser');
 
-    const work = () => {
-      this.neo4jWriteRepository.createNode(user.props());
-    };
+    // const uow = this.neo4jUowJFactory.makeUnitOfWork('CreateUserUow');
 
-    await uow.start();
-    await uow.complete(work);
+    // const work = async () => {
+    // const randomUserNode = new UserNode({
+    //   id: randomUser.id,
+    //   name: randomUser.name,
+    //   email: randomUser.email,
+    // });
+    // follow one random user
+    // await this.neo4jWriteRepository.followUser(userNode, randomUserNode);
+    // };
+
+    // await uow.start();
+    // await uow.complete(work);
 
     user.commit();
 

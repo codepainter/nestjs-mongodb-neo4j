@@ -9,4 +9,6 @@ export interface IUserMongooseReadRepository {
    * @memberof IUserReadRepository
    */
   findById(id: string): Promise<UserVM>;
+
+  findRandom(): Promise<UserVM>;
 }

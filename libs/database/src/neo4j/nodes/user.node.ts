@@ -10,4 +10,8 @@ export class UserNode {
 
   @NotNull()
   email: string;
+
+  constructor(props: UserNode) {
+    Object.assign(this, props);
+  }
 }

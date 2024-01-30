@@ -39,6 +39,11 @@ export class UserMongooseReadRepository implements IUserMongooseReadRepository {
     return this.toVM(user);
   }
 
+  async findRandom(): Promise<UserVM> {
+    const randomUser = await this.model.aggregate([{ $sample: { size: 1 } }]);
+    return this.toVM(randomUser[0]);
+  }
+
   private toVM(doc: UserDocument): UserVM {
     return new UserVM({
       id: doc.id,

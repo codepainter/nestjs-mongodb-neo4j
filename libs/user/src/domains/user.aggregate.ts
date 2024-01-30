@@ -1,5 +1,7 @@
 import { AggregateRootBase } from '@app/shared/cqrs/aggregate-root.base';
 
+import { UserCreatedEvent } from './events/user-created/user-created.event';
+
 export type UserRequiredProps = Required<{
   id: string;
   name: string;
@@ -28,6 +30,7 @@ export type UserUpdatableProps = Partial<{
 }>;
 
 export interface User {
+  create(props: CreateUserProps): Promise<void>;
   props: () => UserProps;
   commit: () => void;
 }
@@ -45,6 +48,10 @@ export class UserAggregate extends AggregateRootBase implements User {
   constructor(props: UserProps) {
     super();
     Object.assign(this, props);
+  }
+
+  async create(): Promise<void> {
+    this.apply(new UserCreatedEvent(this.props()));
   }
 
   props() {
