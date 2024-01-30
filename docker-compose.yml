@@ -14,6 +14,7 @@ services:
       - MONGO_DATABASE_URI=mongodb://mongodb:27017/nestjs-mongodb-neo4j
       - REDIS_HOST=cache
       - NEO4J_HOST=neo4j
+      - RABBITMQ_URI=amqp://user:password@rabbitmq:5672
     ports:
       # Exposed:container
       - "3000:3000"
@@ -21,6 +22,7 @@ services:
       - mongodb
       - neo4j
       - cache
+      - rabbitmq
     develop:
       watch:
         - path: package.json
@@ -62,7 +64,23 @@ services:
     volumes:
       - "cache_data:/bitnami/redis/data"
 
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "4369:4369"
+      - "5551:5551"
+      - "5552:5552"
+      - "5672:5672"
+      - "25672:25672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=password
+    volumes:
+      - "rabbitmq_data:/bitnami/rabbitmq/mnesia"
+
 volumes:
   mongodb_data:
   cache_data:
   neo4j_data:
+  rabbitmq_data:

@@ -30,6 +30,7 @@
     "start:api-service:dev": "yarn start:dev api-service"
   },
   "dependencies": {
+    "@golevelup/nestjs-rabbitmq": "^4.1.0",
     "@nestjs/axios": "^2.0.0",
     "@nestjs/cache-manager": "^2.2.0",
     "@nestjs/common": "^9.0.0",
@@ -139,7 +140,8 @@
       "^@app/health(|/.*)$": "<rootDir>/libs/health/src/$1",
       "^@app/cache(|/.*)$": "<rootDir>/libs/cache/src/$1",
       "^@app/test(|/.*)$": "<rootDir>/libs/test/src/$1",
-      "^@app/user(|/.*)$": "<rootDir>/libs/user/src/$1"
+      "^@app/user(|/.*)$": "<rootDir>/libs/user/src/$1",
+      "^@app/queue(|/.*)$": "<rootDir>/libs/queue/src/$1"
     }
   },
   "config": {

@@ -29,16 +29,16 @@ export class CreateUserCommandHandler extends CommandHandlerBase<
   }
 
   async handleCommand(command: CreateUserCommand): Promise<CreateUserResult> {
-    const user = this.factory.create({
+    const newUser = this.factory.create({
       name: command.props.name,
       email: command.props.email,
       password: command.props.password,
     });
 
-    user.create();
+    newUser.create();
 
-    const randomUser = await this.userReadRepo.findRandom();
-    this.logger.debug({ randomUser }, 'randomUser');
+    // const randomUser = await this.userReadRepo.findRandom();
+    // this.logger.debug({ randomUser }, 'randomUser');
 
     // const uow = this.neo4jUowJFactory.makeUnitOfWork('CreateUserUow');
 
@@ -55,8 +55,8 @@ export class CreateUserCommandHandler extends CommandHandlerBase<
     // await uow.start();
     // await uow.complete(work);
 
-    user.commit();
+    newUser.commit();
 
-    return new CreateUserResult(user.props().id);
+    return new CreateUserResult(newUser.props().id);
   }
 }

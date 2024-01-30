@@ -4,6 +4,7 @@ import { MongoDBModule } from '@app/database/mongodb/mongodb.module';
 import { Neo4jModule } from '@app/database/neo4j/neo4j.module';
 import { HealthModule } from '@app/health';
 import { LoggerModule } from '@app/logger';
+import { RabbitMQModule } from '@app/queue/rabbitmq/rabbitmq.module';
 import { Environment } from '@app/shared/shared.constants';
 import { UserModule } from '@app/user';
 import { Module } from '@nestjs/common';
@@ -26,6 +27,7 @@ import { AppConfigModule } from './config/config.module';
     }),
     MongoDBModule,
     Neo4jModule,
+    RabbitMQModule,
     HealthModule,
     UserModule,
   ],
