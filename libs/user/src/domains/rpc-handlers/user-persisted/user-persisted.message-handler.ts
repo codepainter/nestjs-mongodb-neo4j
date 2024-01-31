@@ -1,6 +1,11 @@
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
 import { UserNode } from '@app/database/neo4j/nodes/user.node';
+import {
+  Exchange,
+  Queue,
+  RoutingKey,
+} from '@app/queue/rabbitmq/rabbitmq.constants';
 import { IUserNeo4jWriteRepository } from '@app/user/interfaces/user.neo4j.write-repository';
 import { USER_NEO4J_WRITE_REPOSITORY } from '@app/user/user.constants';
 import { Nack, RabbitRPC } from '@golevelup/nestjs-rabbitmq';
@@ -21,9 +26,9 @@ export class UserPersistedMessageHandler {
   ) {}
 
   @RabbitRPC({
-    exchange: 'neo4j-exchange',
-    routingKey: 'neo4j.user.persisted',
-    queue: 'neo4j-queue',
+    exchange: Exchange.NEO4J_EXCHANGE,
+    routingKey: RoutingKey.NEO4J_USER_PERSISTED,
+    queue: Queue.NEO4J_QUEUE,
   })
   public async handleMessage(message: UserPersistedMessage) {
     this.logger.trace('handleMessage()');

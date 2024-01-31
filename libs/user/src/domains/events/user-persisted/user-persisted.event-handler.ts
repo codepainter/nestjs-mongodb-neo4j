@@ -1,6 +1,10 @@
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
-import { RABBITMQ_SERVICE } from '@app/queue/rabbitmq/rabbitmq.constants';
+import {
+  Exchange,
+  RABBITMQ_SERVICE,
+  RoutingKey,
+} from '@app/queue/rabbitmq/rabbitmq.constants';
 import { RabbitMQService } from '@app/queue/rabbitmq/rabbitmq.service';
 import { EventHandlerBase } from '@app/shared/cqrs/event-handler.base';
 import { Inject } from '@nestjs/common';
@@ -35,8 +39,8 @@ export class UserPersistedEventHandler extends EventHandlerBase<UserPersistedEve
 
     // Publish to RabbitMQ
     this.rabbitMQService.publish<UserPersistedMessage>({
-      exchange: 'neo4j-exchange',
-      routingKey: 'neo4j.user.persisted',
+      exchange: Exchange.NEO4J_EXCHANGE,
+      routingKey: RoutingKey.NEO4J_USER_PERSISTED,
       message: new UserPersistedMessage({
         id: event.props.id,
         name: event.props.name,

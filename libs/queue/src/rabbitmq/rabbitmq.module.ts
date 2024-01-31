@@ -9,12 +9,17 @@ import { Global, Module } from '@nestjs/common';
 
 import { RabbitMQConfigModule } from './config/config.module';
 import { RabbitMQConfigService } from './config/config.service';
-import { RABBITMQ_SERVICE } from './rabbitmq.constants';
+import {
+  Exchange,
+  Queue,
+  RABBITMQ_SERVICE,
+  RoutingKey,
+} from './rabbitmq.constants';
 import { RabbitMQService } from './rabbitmq.service';
 
 const Exchanges: RabbitMQExchangeConfig[] = [
   {
-    name: 'neo4j-exchange',
+    name: Exchange.NEO4J_EXCHANGE,
     type: 'topic',
   },
 ];
@@ -31,11 +36,11 @@ const Channels: RabbitMQChannels = {
 
 const Queues: RabbitMQQueueConfig[] = [
   {
-    name: 'neo4j-queue',
+    name: Queue.NEO4J_QUEUE,
     options: {
       durable: true,
     },
-    routingKey: 'neo4j.user.persisted',
+    routingKey: [RoutingKey.NEO4J_USER_PERSISTED],
   },
 ];
 
