@@ -8,6 +8,7 @@ import { UserDetailsController } from './controllers/user-detail/user-detail.con
 import { UserCreatedEventHandler } from './domains/events/user-created/user-created.event-handler';
 import { UserNodeCreatedEventHandler } from './domains/events/user-node-created/user-node-created.event-handler';
 import { UserPersistedEventHandler } from './domains/events/user-persisted/user-persisted.event-handler';
+import { UserPersistedMessageHandler } from './domains/rpc-handlers/user-persisted/user-persisted.message-handler';
 import { UserAggregateFactory } from './domains/user.factory';
 import { UserErrorInterceptor } from './interceptors/user.error-interceptor';
 import { UserDetailsQueryHandler } from './queries/user-detail/user-detail.query-handler';
@@ -22,6 +23,8 @@ import {
   USER_WRITE_REPOSITORY,
 } from './user.constants';
 import { UserService } from './user.service';
+
+const MessageHandlers: Provider[] = [UserPersistedMessageHandler];
 
 const Domains: Provider[] = [
   {
@@ -79,6 +82,7 @@ const Services: Provider[] = [
     ...Repositories,
     ...Interceptors,
     ...Services,
+    ...MessageHandlers,
   ],
   controllers: [CreateUserController, UserDetailsController],
   exports: [USER_SERVICE],

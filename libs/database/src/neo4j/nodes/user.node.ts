@@ -11,6 +11,9 @@ export class UserNode {
   @NotNull()
   email: string;
 
+  @NotNull()
+  createdAt: Date;
+
   constructor(props: UserNode) {
     Object.assign(this, props);
   }

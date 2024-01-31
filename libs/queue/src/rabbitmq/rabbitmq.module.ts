@@ -9,6 +9,8 @@ import { Global, Module } from '@nestjs/common';
 
 import { RabbitMQConfigModule } from './config/config.module';
 import { RabbitMQConfigService } from './config/config.service';
+import { RABBITMQ_SERVICE } from './rabbitmq.constants';
+import { RabbitMQService } from './rabbitmq.service';
 
 const Exchanges: RabbitMQExchangeConfig[] = [
   {
@@ -33,6 +35,7 @@ const Queues: RabbitMQQueueConfig[] = [
     options: {
       durable: true,
     },
+    routingKey: 'neo4j.user.persisted',
   },
 ];
 
@@ -47,11 +50,17 @@ const Queues: RabbitMQQueueConfig[] = [
         exchanges: Exchanges,
         channels: Channels,
         queues: Queues,
+        connectionInitOptions: { wait: false },
       }),
     }),
     RabbitMQModule,
   ],
-  providers: [],
-  exports: [],
+  providers: [
+    {
+      provide: RABBITMQ_SERVICE,
+      useClass: RabbitMQService,
+    },
+  ],
+  exports: [RabbitMQModuleNestjs, RABBITMQ_SERVICE],
 })
 export class RabbitMQModule {}
