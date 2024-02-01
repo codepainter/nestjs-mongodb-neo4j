@@ -37,6 +37,8 @@ const Channels: RabbitMQChannels = {
 const Queues: RabbitMQQueueConfig[] = [
   {
     name: Queue.NEO4J_QUEUE,
+    exchange: Exchange.NEO4J_EXCHANGE,
+    createQueueIfNotExists: true,
     options: {
       durable: true,
     },
