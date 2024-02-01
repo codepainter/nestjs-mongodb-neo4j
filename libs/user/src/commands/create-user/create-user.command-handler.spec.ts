@@ -4,7 +4,6 @@ import { createMock } from 'ts-auto-mock';
 import { UserAggregateStub } from '@app/test/user.stubs';
 import { UserAggregate } from '@app/user/domains/user.aggregate';
 import { UserAggregateFactory } from '@app/user/domains/user.factory';
-import { IUserMongooseReadRepository } from '@app/user/interfaces/user.mongoose.read-repository.interface';
 
 import { CreateUserCommand } from './create-user.command';
 import { CreateUserCommandHandler } from './create-user.command-handler';
@@ -13,13 +12,8 @@ import { CreateUserResult } from './create-user.result';
 describe('CreateUserCommandHandler', () => {
   const logger = createMock<PinoLogger>();
   const factory = createMock<UserAggregateFactory>();
-  const userReadRepo = createMock<IUserMongooseReadRepository>();
 
-  const commandHandler = new CreateUserCommandHandler(
-    logger,
-    factory,
-    userReadRepo,
-  );
+  const commandHandler = new CreateUserCommandHandler(logger, factory);
 
   afterEach(() => {
     jest.clearAllMocks();

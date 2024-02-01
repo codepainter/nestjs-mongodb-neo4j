@@ -25,7 +25,7 @@ COPY libs ./libs
 RUN yarn build api-service
 
 # Run-time stage
-FROM node:20-alpine AS runtime
+FROM node:20-slim AS runtime
 
 WORKDIR /app
 

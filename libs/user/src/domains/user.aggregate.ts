@@ -30,7 +30,7 @@ export type UserUpdatableProps = Partial<{
 }>;
 
 export interface User {
-  create(props: CreateUserProps): Promise<void>;
+  create(): Promise<void>;
   props: () => UserProps;
   commit: () => void;
 }
