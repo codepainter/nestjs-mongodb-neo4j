@@ -1,4 +1,5 @@
-import { CacheModule, Global, Module } from '@nestjs/common';
+import { CacheModule } from '@nestjs/cache-manager';
+import { Global, Module } from '@nestjs/common';
 
 import { IN_MEMORY_CACHE_SERVICE } from '../cache.constants';
 import { InMemoryCacheService } from './in-memory-cache.service';

@@ -1,7 +1,8 @@
 import { Cache } from 'cache-manager';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
-import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { ICacheService } from '../cache.interface';
 

@@ -31,7 +31,7 @@ services:
       watch:
         - path: package.json
           action: rebuild
-        - path: yarn.lock
+        - path: pnpm-lock.yaml
           action: rebuild
         - path: nest-cli.json
           action: rebuild
