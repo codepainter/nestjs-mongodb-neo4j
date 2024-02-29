@@ -1,5 +1,5 @@
 # docker build -f apps/api-service/Dockerfile . -t api-service:dev
-FROM node:21-alpine AS install
+FROM node:20-alpine AS install
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
@@ -30,7 +30,7 @@ COPY libs ./libs
 RUN pnpm build api-service
 
 # Run-time stage
-FROM node:21-slim AS runtime
+FROM node:20-slim AS runtime
 
 WORKDIR /app
 

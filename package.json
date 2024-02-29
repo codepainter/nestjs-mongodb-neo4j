@@ -20,7 +20,7 @@
     "test:e2e": "jest --config ./apps/nestjs-mongodb-neo4j/test/jest-e2e.json",
     "prepare": "husky install",
     "setup": "$PWD/scripts/setup.sh",
-    "bootstrap": "pnpm install && docker-compose up -d --build && pnpm migration:run",
+    "bootstrap": "pnpm install && docker compose up -d --build",
     "teardown": "docker-compose down",
     "typeorm": "typeorm",
     "migration:create": "typeorm migration:create",
