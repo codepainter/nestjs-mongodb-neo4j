@@ -4,8 +4,10 @@ import { UserProps } from '../../user.aggregate';
 
 export type UserPersistedMessageProps = Pick<
   UserProps,
-  'id' | 'name' | 'email' | 'createdAt'
->;
+  'id' | 'name' | 'email'
+> & {
+  createdAt: string;
+};
 
 export class UserPersistedMessage extends MessageBase<UserPersistedMessageProps> {
   constructor(props: UserPersistedMessageProps) {

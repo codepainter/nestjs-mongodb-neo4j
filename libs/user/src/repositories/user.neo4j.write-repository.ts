@@ -46,7 +46,10 @@ export class UserNeo4jWriteRepository implements IUserNeo4jWriteRepository {
   async createNode(props: UserNode): Promise<void> {
     this.logger.trace(`createNode()`);
     this.logger.debug({ props }, 'Props');
-    await this.userNodeModelService.create(props).run();
+    const result = await this.userNodeModelService
+      .create(props, { returns: true })
+      .run();
+    this.logger.debug({ result }, 'Result');
   }
 
   async followUser(userNode1: UserNode, userNode2: UserNode): Promise<void> {

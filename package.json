@@ -43,7 +43,6 @@
     "@nestjs/platform-express": "^10.3.3",
     "@nestjs/swagger": "^7.3.0",
     "@nestjs/terminus": "^10.2.3",
-    "@nestjs/typeorm": "^10.0.2",
     "@nhogs/nestjs-neo4j": "^0.5.14",
     "axios": "^1.6.7",
     "bcryptjs": "^2.4.3",
@@ -67,8 +66,7 @@
     "redis": "^4.6.13",
     "reflect-metadata": "^0.1.4",
     "rxjs": "^7.8.1",
-    "shallow-equal-object": "^1.1.1",
-    "typeorm": "^0.3.20"
+    "shallow-equal-object": "^1.1.1"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
@@ -78,6 +76,7 @@
     "@types/amqplib": "^0.10.5",
     "@types/express": "^4.17.21",
     "@types/jest": "29.5.12",
+    "@types/luxon": "^3.4.2",
     "@types/node": "20.11.22",
     "@types/passport-jwt": "^4.0.1",
     "@types/supertest": "^6.0.2",

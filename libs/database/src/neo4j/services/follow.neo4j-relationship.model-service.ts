@@ -19,9 +19,11 @@ export class FollowNeo4jRelationshipModelService extends Neo4jRelationshipModelS
   }
 
   toNeo4j(props: Partial<FollowRelationship>): Record<string, any> {
-    return {
-      since: DateUtil.toFormat(props.since, DATE_FORMAT),
-    };
+    const result: Record<string, any> = { ...props };
+    if (props.since) {
+      result.since = DateUtil.toFormat(props.since, DATE_FORMAT);
+    }
+    return super.toNeo4j(result);
   }
 
   fromNeo4j(record: Record<string, any>): FollowRelationship {
