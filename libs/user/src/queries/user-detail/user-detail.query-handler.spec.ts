@@ -22,7 +22,7 @@ describe('UserDetailQueryHandler', () => {
   describe('handleQuery', () => {
     it('should throw an error if the user is not found', async () => {
       const query = new UserDetailsQuery({
-        id: faker.datatype.uuid(),
+        id: faker.string.uuid(),
       });
 
       const userReadRepoFindByIdSpy = jest
@@ -31,13 +31,13 @@ describe('UserDetailQueryHandler', () => {
 
       const execute = queryHandler.handleQuery(query);
 
-      await expect(execute).rejects.toThrowError(UserNotFoundException);
+      await expect(execute).rejects.toThrow(UserNotFoundException);
       expect(userReadRepoFindByIdSpy).toHaveBeenCalledTimes(1);
     });
 
     it('should return a UserDetailsResult', async () => {
       const query = new UserDetailsQuery({
-        id: faker.datatype.uuid(),
+        id: faker.string.uuid(),
       });
 
       const userReadRepoFindByIdSpy = jest

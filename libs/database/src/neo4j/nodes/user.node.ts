@@ -1,4 +1,4 @@
-import { Node, NodeKey, NotNull } from '@nhogs/nestjs-neo4j';
+import { Node, NodeKey, NotNull, Unique } from '@nhogs/nestjs-neo4j';
 
 @Node({ label: 'User' })
 export class UserNode {
@@ -9,6 +9,7 @@ export class UserNode {
   name: string;
 
   @NotNull()
+  @Unique()
   email: string;
 
   @NotNull()

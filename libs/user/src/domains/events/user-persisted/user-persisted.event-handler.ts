@@ -45,7 +45,7 @@ export class UserPersistedEventHandler extends EventHandlerBase<UserPersistedEve
         id: event.props.id,
         name: event.props.name,
         email: event.props.email,
-        createdAt: event.props.createdAt,
+        createdAt: event.props.createdAt.toUTCString(),
       }),
     });
 

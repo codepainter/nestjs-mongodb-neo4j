@@ -38,8 +38,9 @@ export class UserPersistedMessageHandler {
       id: message.props.id,
       name: message.props.name,
       email: message.props.email,
-      createdAt: message.props.createdAt,
+      createdAt: new Date(message.props.createdAt),
     });
+    this.logger.debug({ userNode }, 'userNode');
     await this.neo4jWriteRepository.createNode(userNode);
     this.eventBus.publish(new UserNodeCreatedEvent(userNode));
 

@@ -3,7 +3,6 @@ version: "3.9"
 services:
   api-service:
     image: nestjs-mongodb-neo4j/api-service:dev
-    container_name: api-service
     build:
       context: .
       dockerfile: apps/api-service/Dockerfile
@@ -31,14 +30,13 @@ services:
       watch:
         - path: package.json
           action: rebuild
-        - path: yarn.lock
+        - path: pnpm-lock.yaml
           action: rebuild
         - path: nest-cli.json
           action: rebuild
 
   mongodb:
     image: arm64v8/mongo:6.0.5-jammy
-    container_name: mongodb
     platform: linux/arm64/v8
     ports:
       - "27017:27017"
@@ -49,7 +47,6 @@ services:
 
   neo4j:
     image: bitnami/neo4j:5.16.0
-    container_name: neo4j
     environment:
       - NEO4J_PASSWORD=password
     ports:
@@ -72,7 +69,6 @@ services:
 
   rabbitmq:
     image: rabbitmq:3-management-alpine
-    container_name: rabbitmq
     ports:
       - "4369:4369"
       - "5551:5551"

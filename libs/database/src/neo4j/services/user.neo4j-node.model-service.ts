@@ -16,9 +16,12 @@ export class UserNeo4jNodeModelService extends Neo4jNodeModelService<UserNode> {
   }
 
   toNeo4j(props: Partial<UserNode>): Record<string, any> {
-    return {
-      createdAt: DateUtil.toFormat(props.createdAt, DATE_FORMAT),
-    };
+    const result: Record<string, any> = { ...props };
+    if (props.createdAt) {
+      result.createdAt = DateUtil.toFormat(props.createdAt, DATE_FORMAT);
+    }
+
+    return super.toNeo4j(result);
   }
 
   fromNeo4j(record: Record<string, any>): UserNode {
@@ -28,5 +31,17 @@ export class UserNeo4jNodeModelService extends Neo4jNodeModelService<UserNode> {
       email: record.email,
       createdAt: DateUtil.fromFormat(record.createdAt, DATE_FORMAT),
     });
+  }
+
+  async findByName(
+    name: string,
+    options?: {
+      skip?: number;
+      limit?: number;
+      orderBy?: string;
+      descending?: boolean;
+    },
+  ): Promise<UserNode[]> {
+    return super.findBy({ name }, options).run();
   }
 }

@@ -2,14 +2,8 @@ import { redisStore } from 'cache-manager-redis-yet';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 import { RedisClientOptions } from 'redis';
 
-import { CacheModule } from '@nestjs/cache-manager';
-import {
-  CACHE_MANAGER,
-  Global,
-  Inject,
-  Module,
-  OnModuleInit,
-} from '@nestjs/common';
+import { CACHE_MANAGER, CacheModule } from '@nestjs/cache-manager';
+import { Global, Inject, Module, OnModuleInit } from '@nestjs/common';
 
 import { REDIS_CACHE_SERVICE } from '../cache.constants';
 import { RedisCacheService } from './redis-cache.service';
