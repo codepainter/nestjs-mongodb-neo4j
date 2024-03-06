@@ -16,9 +16,9 @@ import { InjectConnection } from '@nestjs/mongoose';
 import { User, UserProps, UserUpdatableProps } from '../domains/user.aggregate';
 import { UserAggregateFactory } from '../domains/user.factory';
 import {
-  DuplicateKeyException,
+  DuplicateUserException,
   UserNotFoundException,
-} from '../errors/user.errors';
+} from '../exceptions/user.exceptions';
 import { IUserMongooseWriteRepository } from '../interfaces/user.mongoose.write-repository.interface';
 import { USER_AGGREGATE_FACTORY } from '../user.constants';
 
@@ -42,7 +42,7 @@ export class UserMongooseWriteRepository
       await this.model.create(props);
     } catch (error) {
       this.logger.error({ error }, 'Error');
-      throw new DuplicateKeyException();
+      throw new DuplicateUserException();
     }
   }
 

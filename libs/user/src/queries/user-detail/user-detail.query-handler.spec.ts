@@ -2,7 +2,7 @@ import { PinoLogger } from 'nestjs-pino';
 import { createMock } from 'ts-auto-mock';
 
 import { UserVMStub } from '@app/test/user.stubs';
-import { UserNotFoundException } from '@app/user/errors/user.errors';
+import { UserNotFoundException } from '@app/user/exceptions/user.exceptions';
 import { IUserMongooseReadRepository } from '@app/user/interfaces/user.mongoose.read-repository.interface';
 import { faker } from '@faker-js/faker';
 

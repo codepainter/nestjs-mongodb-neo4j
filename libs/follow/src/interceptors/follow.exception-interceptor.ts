@@ -7,18 +7,14 @@ import {
   ExecutionContext,
   Injectable,
   NestInterceptor,
-  NotFoundException,
 } from '@nestjs/common';
 
-import {
-  DuplicateUserException,
-  UserNotFoundException,
-} from '../exceptions/user.exceptions';
+import { DuplicateFollowException } from '../exceptions/follow.exceptions';
 
 @Injectable()
-export class UserErrorInterceptor implements NestInterceptor {
+export class FollowErrorInterceptor implements NestInterceptor {
   constructor(
-    @InjectPinoLogger(UserErrorInterceptor.name)
+    @InjectPinoLogger(FollowErrorInterceptor.name)
     private readonly logger: PinoLogger,
   ) {}
 
@@ -27,13 +23,11 @@ export class UserErrorInterceptor implements NestInterceptor {
       catchError((error) => {
         this.logger.debug(
           { handlerName: context.getHandler().name, error },
-          'User Error Intercepted',
+          'Follow Error Intercepted',
         );
 
         switch (error.constructor) {
-          case UserNotFoundException:
-            return throwError(() => new NotFoundException(error.toJSON()));
-          case DuplicateUserException:
+          case DuplicateFollowException:
             return throwError(() => new ConflictException(error.toJSON()));
 
           default:

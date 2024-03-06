@@ -33,7 +33,9 @@
       "@app/cache": ["libs/cache/src"],
       "@app/cache/*": ["libs/cache/src/*"],
       "@app/queue": ["libs/queue/src"],
-      "@app/queue/*": ["libs/queue/src/*"]
+      "@app/queue/*": ["libs/queue/src/*"],
+      "@app/follow": ["libs/follow/src"],
+      "@app/follow/*": ["libs/follow/src/*"]
     },
     "plugins": [
       {

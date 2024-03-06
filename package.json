@@ -142,7 +142,8 @@
       "^@app/cache(|/.*)$": "<rootDir>/libs/cache/src/$1",
       "^@app/test(|/.*)$": "<rootDir>/libs/test/src/$1",
       "^@app/user(|/.*)$": "<rootDir>/libs/user/src/$1",
-      "^@app/queue(|/.*)$": "<rootDir>/libs/queue/src/$1"
+      "^@app/queue(|/.*)$": "<rootDir>/libs/queue/src/$1",
+      "^@app/follow(|/.*)$": "<rootDir>/libs/follow/src/$1"
     }
   },
   "config": {

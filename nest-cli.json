@@ -90,6 +90,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/queue/tsconfig.lib.json"
       }
+    },
+    "follow": {
+      "type": "library",
+      "root": "libs/follow",
+      "entryFile": "index",
+      "sourceRoot": "libs/follow/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/follow/tsconfig.lib.json"
+      }
     }
   }
 }

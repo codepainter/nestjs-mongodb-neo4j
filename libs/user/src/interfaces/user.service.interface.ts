@@ -19,4 +19,12 @@ export interface IUserService {
    * @memberof IUserService
    */
   getUserById(id: string): Promise<UserVM>;
+
+  /**
+   *
+   *
+   * @return {*}  {Promise<UserVM>}
+   * @memberof IUserService
+   */
+  getRandomUser(count?: number): Promise<UserVM[]>;
 }

@@ -36,4 +36,10 @@ export class UserService implements IUserService {
 
     return user;
   }
+
+  async getRandomUser(count?: number): Promise<UserVM[]> {
+    this.logger.trace('getRandomUser()');
+
+    return this.userReadRepo.findRandom(count);
+  }
 }

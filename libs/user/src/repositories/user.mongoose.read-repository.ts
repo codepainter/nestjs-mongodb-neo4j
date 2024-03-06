@@ -13,7 +13,7 @@ import {
 import { Injectable } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 
-import { UserNotFoundException } from '../errors/user.errors';
+import { UserNotFoundException } from '../exceptions/user.exceptions';
 import { IUserMongooseReadRepository } from '../interfaces/user.mongoose.read-repository.interface';
 import { UserVM } from '../vms/user.vm';
 
@@ -39,9 +39,11 @@ export class UserMongooseReadRepository implements IUserMongooseReadRepository {
     return this.toVM(user);
   }
 
-  async findRandom(): Promise<UserVM> {
-    const randomUser = await this.model.aggregate([{ $sample: { size: 1 } }]);
-    return this.toVM(randomUser[0]);
+  async findRandom(count = 1): Promise<UserVM[]> {
+    const randomUser = await this.model.aggregate([
+      { $sample: { size: count } },
+    ]);
+    return randomUser.map(this.toVM);
   }
 
   private toVM(doc: UserDocument): UserVM {

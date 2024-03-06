@@ -10,5 +10,5 @@ export interface IUserMongooseReadRepository {
    */
   findById(id: string): Promise<UserVM>;
 
-  findRandom(): Promise<UserVM>;
+  findRandom(count?: number): Promise<UserVM[]>;
 }
