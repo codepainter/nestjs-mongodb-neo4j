@@ -3,7 +3,7 @@ import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 import { FollowAggregateFactory } from '@app/follow/domains/follow.factory';
 import {
   FOLLOW_AGGREGATE_FACTORY,
-  FOLLOW_WRITE_REPOSITORY,
+  FOLLOW_MONGO_WRITE_REPOSITORY,
 } from '@app/follow/follow.constants';
 import { IFollowMongoWriteRepository } from '@app/follow/interfaces/follow.mongo-write-repository.interface';
 import { CommandHandlerBase } from '@app/shared/cqrs/command-handler.base';
@@ -25,7 +25,7 @@ export class FollowRandomCommandHandler extends CommandHandlerBase<
     readonly logger: PinoLogger,
     @Inject(USER_SERVICE)
     readonly userService: IUserService,
-    @Inject(FOLLOW_WRITE_REPOSITORY)
+    @Inject(FOLLOW_MONGO_WRITE_REPOSITORY)
     readonly followWriteRepo: IFollowMongoWriteRepository,
     @Inject(FOLLOW_AGGREGATE_FACTORY) readonly factory: FollowAggregateFactory,
   ) {

@@ -5,3 +5,11 @@ export const FOLLOW_NEO4J_RELATIONSHIP_MODEL_SERVICE =
 
 export const NEO4J_SERVICE = 'NEO4J_SERVICE';
 export const DATE_FORMAT = 'yyyy-MM-dd HH:mm:ss';
+
+export enum NodeNames {
+  User = 'User',
+}
+
+export enum RelationshipTypes {
+  Follows = 'FOLLOWS',
+}

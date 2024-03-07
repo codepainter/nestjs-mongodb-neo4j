@@ -8,12 +8,14 @@ import { FollowRandomController } from './controllers/follow-random/follow-rando
 import { FollowAggregateFactory } from './domains/follow.factory';
 import {
   FOLLOW_AGGREGATE_FACTORY,
+  FOLLOW_MONGO_WRITE_REPOSITORY,
+  FOLLOW_NEO4J_WRITE_REPOSITORY,
   FOLLOW_SERVICE,
-  FOLLOW_WRITE_REPOSITORY,
 } from './follow.constants';
 import { FollowService } from './follow.service';
 import { FollowErrorInterceptor } from './interceptors/follow.exception-interceptor';
 import { FollowMongoWriteRepository } from './repositories/follow.mongo-write-repository';
+import { FollowNeo4jWriteRepository } from './repositories/follow.neo4j-write-repository';
 
 const Controllers = [FollowRandomController];
 
@@ -28,8 +30,12 @@ const Factories: Provider[] = [
 
 const Repositories: Provider[] = [
   {
-    provide: FOLLOW_WRITE_REPOSITORY,
+    provide: FOLLOW_MONGO_WRITE_REPOSITORY,
     useClass: FollowMongoWriteRepository,
+  },
+  {
+    provide: FOLLOW_NEO4J_WRITE_REPOSITORY,
+    useClass: FollowNeo4jWriteRepository,
   },
 ];
 
