@@ -5,9 +5,10 @@ import { Inject, Injectable } from '@nestjs/common';
 
 import { FOLLOW_NEO4J_WRITE_REPOSITORY } from './follow.constants';
 import { IFollowNeo4jWriteRepository } from './interfaces/follow.neo4j-write-repository';
+import { IFollowService } from './interfaces/follow.service.interface';
 
 @Injectable()
-export class FollowService {
+export class FollowService implements IFollowService {
   constructor(
     @InjectPinoLogger(FollowService.name)
     readonly logger: PinoLogger,
