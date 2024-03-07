@@ -11,4 +11,8 @@ export interface IUserMongoReadRepository {
   findById(id: string): Promise<UserVM>;
 
   findRandom(count?: number): Promise<UserVM[]>;
+
+  findByUsername(username: string): Promise<UserVM>;
+
+  findByEmail(email: string): Promise<UserVM>;
 }
