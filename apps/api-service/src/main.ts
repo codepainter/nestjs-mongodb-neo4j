@@ -15,6 +15,7 @@ import { AppConfigService } from './config/config.service';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true,
+    snapshot: true,
   });
 
   const logger = app.get<PinoLogger>(PinoLogger);

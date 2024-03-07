@@ -16,20 +16,18 @@ import { InjectConnection } from '@nestjs/mongoose';
 import { User, UserProps, UserUpdatableProps } from '../domains/user.aggregate';
 import { UserAggregateFactory } from '../domains/user.factory';
 import {
-  DuplicateKeyException,
+  DuplicateUserException,
   UserNotFoundException,
-} from '../errors/user.errors';
-import { IUserMongooseWriteRepository } from '../interfaces/user.mongoose.write-repository.interface';
+} from '../exceptions/user.exceptions';
+import { IUserMongoWriteRepository } from '../interfaces/user.mongo-write-repository.interface';
 import { USER_AGGREGATE_FACTORY } from '../user.constants';
 
 @Injectable()
-export class UserMongooseWriteRepository
-  implements IUserMongooseWriteRepository
-{
+export class UserMongoWriteRepository implements IUserMongoWriteRepository {
   private model: UserModel;
 
   constructor(
-    @InjectPinoLogger(UserMongooseWriteRepository.name)
+    @InjectPinoLogger(UserMongoWriteRepository.name)
     private readonly logger: PinoLogger,
     @InjectConnection(MONGODB_CONNECTION) readonly connection: Connection,
     @Inject(USER_AGGREGATE_FACTORY) readonly factory: UserAggregateFactory,
@@ -42,7 +40,7 @@ export class UserMongooseWriteRepository
       await this.model.create(props);
     } catch (error) {
       this.logger.error({ error }, 'Error');
-      throw new DuplicateKeyException();
+      throw new DuplicateUserException();
     }
   }
 

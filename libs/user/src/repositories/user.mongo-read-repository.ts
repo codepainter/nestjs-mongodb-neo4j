@@ -13,16 +13,16 @@ import {
 import { Injectable } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 
-import { UserNotFoundException } from '../errors/user.errors';
-import { IUserMongooseReadRepository } from '../interfaces/user.mongoose.read-repository.interface';
+import { UserNotFoundException } from '../exceptions/user.exceptions';
+import { IUserMongoReadRepository } from '../interfaces/user.mongo-read-repository.interface';
 import { UserVM } from '../vms/user.vm';
 
 @Injectable()
-export class UserMongooseReadRepository implements IUserMongooseReadRepository {
+export class UserMongoReadRepository implements IUserMongoReadRepository {
   private model: UserModel;
 
   constructor(
-    @InjectPinoLogger(UserMongooseReadRepository.name)
+    @InjectPinoLogger(UserMongoReadRepository.name)
     readonly logger: PinoLogger,
     @InjectConnection(MONGODB_CONNECTION) readonly connection: Connection,
   ) {
@@ -39,9 +39,11 @@ export class UserMongooseReadRepository implements IUserMongooseReadRepository {
     return this.toVM(user);
   }
 
-  async findRandom(): Promise<UserVM> {
-    const randomUser = await this.model.aggregate([{ $sample: { size: 1 } }]);
-    return this.toVM(randomUser[0]);
+  async findRandom(count = 1): Promise<UserVM[]> {
+    const randomUser = await this.model.aggregate([
+      { $sample: { size: count } },
+    ]);
+    return randomUser.map(this.toVM);
   }
 
   private toVM(doc: UserDocument): UserVM {

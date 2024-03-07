@@ -5,12 +5,13 @@ import {
   Neo4jService,
 } from '@nhogs/nestjs-neo4j';
 
-import { DATE_FORMAT } from '../neo4j.constants';
+import { DATE_FORMAT, RelationshipTypes } from '../neo4j.constants';
 import { FollowRelationship } from '../nodes/follow.relationship';
 
 @Injectable()
 export class FollowNeo4jRelationshipModelService extends Neo4jRelationshipModelService<FollowRelationship> {
-  label = 'FOLLOWS';
+  label = RelationshipTypes.Follows;
+
   protected logger: Logger = undefined;
   protected timestamp: string = undefined;
 

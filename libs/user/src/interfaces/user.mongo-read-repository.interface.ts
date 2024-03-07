@@ -1,6 +1,6 @@
 import { UserVM } from '../vms/user.vm';
 
-export interface IUserMongooseReadRepository {
+export interface IUserMongoReadRepository {
   /**
    *
    *
@@ -10,5 +10,5 @@ export interface IUserMongooseReadRepository {
    */
   findById(id: string): Promise<UserVM>;
 
-  findRandom(): Promise<UserVM>;
+  findRandom(count?: number): Promise<UserVM[]>;
 }

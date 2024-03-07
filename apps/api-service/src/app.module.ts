@@ -2,6 +2,7 @@ import { join, resolve } from 'path';
 
 import { MongoDBModule } from '@app/database/mongodb';
 import { Neo4jModule } from '@app/database/neo4j';
+import { FollowModule } from '@app/follow';
 import { HealthModule } from '@app/health';
 import { LoggerModule } from '@app/logger';
 import { RabbitMQModule } from '@app/queue/rabbitmq';
@@ -30,6 +31,7 @@ import { AppConfigModule } from './config/config.module';
     RabbitMQModule,
     HealthModule,
     UserModule,
+    FollowModule,
   ],
 })
 export class AppModule {}

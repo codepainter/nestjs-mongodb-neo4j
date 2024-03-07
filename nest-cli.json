@@ -3,6 +3,8 @@
   "collection": "@nestjs/schematics",
   "sourceRoot": "apps/api-service/src",
   "compilerOptions": {
+    "builder": "swc",
+    "typeCheck": true,
     "deleteOutDir": true,
     "webpack": true,
     "tsConfigPath": "apps/api-service/tsconfig.app.json"
@@ -89,6 +91,15 @@
       "sourceRoot": "libs/queue/src",
       "compilerOptions": {
         "tsConfigPath": "libs/queue/tsconfig.lib.json"
+      }
+    },
+    "follow": {
+      "type": "library",
+      "root": "libs/follow",
+      "entryFile": "index",
+      "sourceRoot": "libs/follow/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/follow/tsconfig.lib.json"
       }
     }
   }

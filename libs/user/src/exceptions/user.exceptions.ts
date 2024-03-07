@@ -11,11 +11,11 @@ export class UserNotFoundException extends ExceptionBase {
   }
 }
 
-export class DuplicateKeyException extends ExceptionBase {
+export class DuplicateUserException extends ExceptionBase {
   public readonly code = UserErrorCodes.DUPLICATE_KEY;
   static readonly message = 'Duplicate Key';
 
   constructor(metadata?: unknown) {
-    super(DuplicateKeyException.message, metadata);
+    super(DuplicateUserException.message, metadata);
   }
 }

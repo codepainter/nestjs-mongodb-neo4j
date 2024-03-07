@@ -9,7 +9,7 @@ export abstract class CommandHandlerBase<TCommand, TResult = any>
 
   abstract handleCommand(command: TCommand): Promise<TResult>;
 
-  async execute(command: TCommand): Promise<TResult> {
+  async execute(command?: TCommand): Promise<TResult> {
     this.logger.trace('START');
     this.logger.debug({ command }, 'Execute Command');
     try {
