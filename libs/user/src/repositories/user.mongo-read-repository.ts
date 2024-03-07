@@ -14,15 +14,15 @@ import { Injectable } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 
 import { UserNotFoundException } from '../exceptions/user.exceptions';
-import { IUserMongooseReadRepository } from '../interfaces/user.mongoose.read-repository.interface';
+import { IUserMongoReadRepository } from '../interfaces/user.mongo-read-repository.interface';
 import { UserVM } from '../vms/user.vm';
 
 @Injectable()
-export class UserMongooseReadRepository implements IUserMongooseReadRepository {
+export class UserMongoReadRepository implements IUserMongoReadRepository {
   private model: UserModel;
 
   constructor(
-    @InjectPinoLogger(UserMongooseReadRepository.name)
+    @InjectPinoLogger(UserMongoReadRepository.name)
     readonly logger: PinoLogger,
     @InjectConnection(MONGODB_CONNECTION) readonly connection: Connection,
   ) {

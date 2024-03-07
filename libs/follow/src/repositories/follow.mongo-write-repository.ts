@@ -11,14 +11,14 @@ import { InjectConnection } from '@nestjs/mongoose';
 
 import { FollowProps } from '../domains/follow.aggregate';
 import { DuplicateFollowException } from '../exceptions/follow.exceptions';
-import { IFollowWriteRepository } from '../interfaces/follow.write-repository.interface';
+import { IFollowMongoWriteRepository } from '../interfaces/follow.mongo-write-repository.interface';
 
 @Injectable()
-export class FollowWriteRepository implements IFollowWriteRepository {
+export class FollowMongoWriteRepository implements IFollowMongoWriteRepository {
   private model: FollowModel;
 
   constructor(
-    @InjectPinoLogger(FollowWriteRepository.name)
+    @InjectPinoLogger(FollowMongoWriteRepository.name)
     readonly logger: PinoLogger,
     @InjectConnection(MONGODB_CONNECTION) readonly connection: Connection,
   ) {

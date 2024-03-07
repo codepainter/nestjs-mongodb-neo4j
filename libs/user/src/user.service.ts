@@ -3,8 +3,8 @@ import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 import { Inject, Injectable } from '@nestjs/common';
 
 import { User } from './domains/user.aggregate';
-import { IUserMongooseReadRepository } from './interfaces/user.mongoose.read-repository.interface';
-import { IUserMongooseWriteRepository } from './interfaces/user.mongoose.write-repository.interface';
+import { IUserMongoReadRepository } from './interfaces/user.mongo-read-repository.interface';
+import { IUserMongoWriteRepository } from './interfaces/user.mongo-write-repository.interface';
 import { IUserService } from './interfaces/user.service.interface';
 import { USER_READ_REPOSITORY, USER_WRITE_REPOSITORY } from './user.constants';
 import { UserVM } from './vms/user.vm';
@@ -14,9 +14,9 @@ export class UserService implements IUserService {
   constructor(
     @InjectPinoLogger(UserService.name) readonly logger: PinoLogger,
     @Inject(USER_WRITE_REPOSITORY)
-    private readonly useWriteRepo: IUserMongooseWriteRepository,
+    private readonly useWriteRepo: IUserMongoWriteRepository,
     @Inject(USER_READ_REPOSITORY)
-    private readonly userReadRepo: IUserMongooseReadRepository,
+    private readonly userReadRepo: IUserMongoReadRepository,
   ) {}
 
   async getAggregateByEmail(email: string): Promise<User> {

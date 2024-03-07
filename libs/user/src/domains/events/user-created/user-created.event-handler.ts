@@ -1,7 +1,7 @@
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
 import { EventHandlerBase } from '@app/shared/cqrs/event-handler.base';
-import { IUserMongooseWriteRepository } from '@app/user/interfaces/user.mongoose.write-repository.interface';
+import { IUserMongoWriteRepository } from '@app/user/interfaces/user.mongo-write-repository.interface';
 import { USER_WRITE_REPOSITORY } from '@app/user/user.constants';
 import { Inject } from '@nestjs/common';
 import { EventBus, EventsHandler } from '@nestjs/cqrs';
@@ -15,7 +15,7 @@ export class UserCreatedEventHandler extends EventHandlerBase<UserCreatedEvent> 
     @InjectPinoLogger(UserCreatedEventHandler.name)
     readonly logger: PinoLogger,
     @Inject(USER_WRITE_REPOSITORY)
-    readonly userWriteRepo: IUserMongooseWriteRepository,
+    readonly userWriteRepo: IUserMongoWriteRepository,
     private eventBus: EventBus,
   ) {
     super(logger);

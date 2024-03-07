@@ -12,8 +12,8 @@ import { UserPersistedMessageHandler } from './domains/rpc-handlers/user-persist
 import { UserAggregateFactory } from './domains/user.factory';
 import { UserErrorInterceptor } from './interceptors/user.error-interceptor';
 import { UserDetailsQueryHandler } from './queries/user-detail/user-detail.query-handler';
-import { UserMongooseReadRepository } from './repositories/user.mongoose.read-repository';
-import { UserMongooseWriteRepository } from './repositories/user.mongoose.write-repository';
+import { UserMongoReadRepository } from './repositories/user.mongo-read-repository';
+import { UserMongoWriteRepository } from './repositories/user.mongo-write-repository';
 import { UserNeo4jWriteRepository } from './repositories/user.neo4j.write-repository';
 import {
   USER_AGGREGATE_FACTORY,
@@ -46,11 +46,11 @@ const QueryHandlers: Provider[] = [UserDetailsQueryHandler];
 const Repositories: Provider[] = [
   {
     provide: USER_WRITE_REPOSITORY,
-    useClass: UserMongooseWriteRepository,
+    useClass: UserMongoWriteRepository,
   },
   {
     provide: USER_READ_REPOSITORY,
-    useClass: UserMongooseReadRepository,
+    useClass: UserMongoReadRepository,
   },
   {
     provide: USER_NEO4J_WRITE_REPOSITORY,

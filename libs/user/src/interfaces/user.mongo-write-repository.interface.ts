@@ -1,6 +1,6 @@
 import { User, UserProps, UserUpdatableProps } from '../domains/user.aggregate';
 
-export interface IUserMongooseWriteRepository {
+export interface IUserMongoWriteRepository {
   /**
    *
    *

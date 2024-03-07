@@ -5,7 +5,7 @@ import {
   FOLLOW_AGGREGATE_FACTORY,
   FOLLOW_WRITE_REPOSITORY,
 } from '@app/follow/follow.constants';
-import { IFollowWriteRepository } from '@app/follow/interfaces/follow.write-repository.interface';
+import { IFollowMongoWriteRepository } from '@app/follow/interfaces/follow.mongo-write-repository.interface';
 import { CommandHandlerBase } from '@app/shared/cqrs/command-handler.base';
 import { USER_SERVICE } from '@app/user';
 import { IUserService } from '@app/user/interfaces/user.service.interface';
@@ -26,7 +26,7 @@ export class FollowRandomCommandHandler extends CommandHandlerBase<
     @Inject(USER_SERVICE)
     readonly userService: IUserService,
     @Inject(FOLLOW_WRITE_REPOSITORY)
-    readonly followWriteRepo: IFollowWriteRepository,
+    readonly followWriteRepo: IFollowMongoWriteRepository,
     @Inject(FOLLOW_AGGREGATE_FACTORY) readonly factory: FollowAggregateFactory,
   ) {
     super(logger);

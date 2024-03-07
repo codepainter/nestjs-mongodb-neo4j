@@ -1,6 +1,6 @@
 import { UserVM } from '../vms/user.vm';
 
-export interface IUserMongooseReadRepository {
+export interface IUserMongoReadRepository {
   /**
    *
    *

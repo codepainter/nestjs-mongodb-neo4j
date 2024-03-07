@@ -13,7 +13,7 @@ import {
 } from './follow.constants';
 import { FollowService } from './follow.service';
 import { FollowErrorInterceptor } from './interceptors/follow.exception-interceptor';
-import { FollowWriteRepository } from './repositories/follow.write-repository';
+import { FollowMongoWriteRepository } from './repositories/follow.mongo-write-repository';
 
 const Controllers = [FollowRandomController];
 
@@ -29,7 +29,7 @@ const Factories: Provider[] = [
 const Repositories: Provider[] = [
   {
     provide: FOLLOW_WRITE_REPOSITORY,
-    useClass: FollowWriteRepository,
+    useClass: FollowMongoWriteRepository,
   },
 ];
 
