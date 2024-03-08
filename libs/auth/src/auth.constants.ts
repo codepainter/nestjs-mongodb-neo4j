@@ -1,12 +1,11 @@
 export const AUTH_SERVICE = 'AUTH_SERVICE';
 
 export enum AuthCodes {
-  LOGGED_IN = 'LOGGED_IN',
-  PROFILE = 'PROFILE',
+  LOGGED_IN = 'AUTH.LOGGED_IN',
 }
 
 export enum AuthErrorCodes {
-  UNAUTHORIZED = 'UNAUTHORIZED',
+  UNAUTHORIZED = 'AUTH.UNAUTHORIZED',
 }
 
 export enum TokenType {
