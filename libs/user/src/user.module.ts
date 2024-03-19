@@ -9,7 +9,7 @@ import { UserCreatedEventHandler } from './domains/events/user-created/user-crea
 import { UserNodeCreatedEventHandler } from './domains/events/user-node-created/user-node-created.event-handler';
 import { UserPersistedEventHandler } from './domains/events/user-persisted/user-persisted.event-handler';
 import { UserPersistedMessageHandler } from './domains/rpc-handlers/user-persisted/user-persisted.message-handler';
-import { UserAggregateFactory } from './domains/user.factory';
+import { UserAggregateFactory } from './domains/user.aggregate-factory';
 import { UserErrorInterceptor } from './interceptors/user.error-interceptor';
 import { UserDetailsQueryHandler } from './queries/user-detail/user-detail.query-handler';
 import { UserMongoReadRepository } from './repositories/user.mongo-read-repository';
