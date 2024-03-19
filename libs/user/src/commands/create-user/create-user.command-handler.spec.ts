@@ -32,8 +32,8 @@ describe('CreateUserCommandHandler', () => {
       const execute = commandHandler.handleCommand(command);
 
       await expect(execute).resolves.toBeInstanceOf(CreateUserResult);
-      expect(factoryCreateSpy).toBeCalledWith(command.props);
-      expect(userCommitSpy).toBeCalledTimes(1);
+      expect(factoryCreateSpy).toHaveBeenCalledWith(command.props);
+      expect(userCommitSpy).toHaveBeenCalledTimes(1);
     });
   });
 });
