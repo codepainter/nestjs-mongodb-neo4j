@@ -27,4 +27,6 @@ export interface IUserService {
    * @memberof IUserService
    */
   getRandomUser(count?: number): Promise<UserVM[]>;
+
+  getUserVMByEmail(id: string): Promise<UserVM>;
 }

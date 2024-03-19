@@ -1,5 +1,6 @@
 import { join, resolve } from 'path';
 
+import { AuthModule } from '@app/auth';
 import { MongoDBModule } from '@app/database/mongodb';
 import { Neo4jModule } from '@app/database/neo4j';
 import { FollowModule } from '@app/follow';
@@ -8,8 +9,9 @@ import { LoggerModule } from '@app/logger';
 import { RabbitMQModule } from '@app/queue/rabbitmq';
 import { Environment } from '@app/shared';
 import { UserModule } from '@app/user';
-import { Module } from '@nestjs/common';
+import { ClassSerializerInterceptor, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 
 import { AppConfigModule } from './config/config.module';
 
@@ -32,6 +34,13 @@ import { AppConfigModule } from './config/config.module';
     HealthModule,
     UserModule,
     FollowModule,
+    AuthModule,
+  ],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ClassSerializerInterceptor,
+    },
   ],
 })
 export class AppModule {}

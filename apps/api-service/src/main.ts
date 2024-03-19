@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 import helmet from 'helmet';
 import { Logger as PinoLogger } from 'nestjs-pino';
 

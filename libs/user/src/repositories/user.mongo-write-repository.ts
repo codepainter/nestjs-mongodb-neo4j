@@ -14,7 +14,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 
 import { User, UserProps, UserUpdatableProps } from '../domains/user.aggregate';
-import { UserAggregateFactory } from '../domains/user.factory';
+import { UserAggregateFactory } from '../domains/user.aggregate-factory';
 import {
   DuplicateUserException,
   UserNotFoundException,

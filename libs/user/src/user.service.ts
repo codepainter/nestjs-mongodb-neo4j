@@ -42,4 +42,9 @@ export class UserService implements IUserService {
 
     return this.userReadRepo.findRandom(count);
   }
+
+  async getUserVMByEmail(email: string): Promise<UserVM> {
+    this.logger.trace('getUserVMById()');
+    return this.userReadRepo.findByEmail(email);
+  }
 }

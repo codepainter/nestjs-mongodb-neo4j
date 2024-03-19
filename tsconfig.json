@@ -35,7 +35,9 @@
       "@app/queue": ["libs/queue/src"],
       "@app/queue/*": ["libs/queue/src/*"],
       "@app/follow": ["libs/follow/src"],
-      "@app/follow/*": ["libs/follow/src/*"]
+      "@app/follow/*": ["libs/follow/src/*"],
+      "@app/auth": ["libs/auth/src"],
+      "@app/auth/*": ["libs/auth/src/*"]
     },
     "plugins": [
       {

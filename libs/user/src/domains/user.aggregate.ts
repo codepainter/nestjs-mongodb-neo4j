@@ -1,4 +1,5 @@
 import { AggregateRootBase } from '@app/shared/cqrs/aggregate-root.base';
+import { PasswordUtil } from '@app/shared/utils/password.util';
 
 import { UserCreatedEvent } from './events/user-created/user-created.event';
 
@@ -31,6 +32,7 @@ export type UserUpdatableProps = Partial<{
 
 export interface User {
   create(): Promise<void>;
+  comparePassword: (password: string) => boolean;
   props: () => UserProps;
   commit: () => void;
 }
@@ -52,6 +54,10 @@ export class UserAggregate extends AggregateRootBase implements User {
 
   async create(): Promise<void> {
     this.apply(new UserCreatedEvent(this.props()));
+  }
+
+  comparePassword(password: string): boolean {
+    return PasswordUtil.compare(password, this.password);
   }
 
   props() {

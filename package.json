@@ -60,6 +60,7 @@
     "nestjs-pino": "^4.0.0",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0",
     "pg": "^8.11.3",
     "pino": "^8.19.0",
     "pino-http": "^9.0.0",
@@ -74,11 +75,13 @@
     "@nestjs/schematics": "^10.1.1",
     "@nestjs/testing": "^10.3.3",
     "@types/amqplib": "^0.10.5",
+    "@types/bcryptjs": "^2.4.6",
     "@types/express": "^4.17.21",
     "@types/jest": "29.5.12",
     "@types/luxon": "^3.4.2",
     "@types/node": "20.11.22",
     "@types/passport-jwt": "^4.0.1",
+    "@types/passport-local": "^1.0.38",
     "@types/supertest": "^6.0.2",
     "@typescript-eslint/eslint-plugin": "^7.1.0",
     "@typescript-eslint/parser": "^7.1.0",
@@ -143,7 +146,8 @@
       "^@app/test(|/.*)$": "<rootDir>/libs/test/src/$1",
       "^@app/user(|/.*)$": "<rootDir>/libs/user/src/$1",
       "^@app/queue(|/.*)$": "<rootDir>/libs/queue/src/$1",
-      "^@app/follow(|/.*)$": "<rootDir>/libs/follow/src/$1"
+      "^@app/follow(|/.*)$": "<rootDir>/libs/follow/src/$1",
+      "^@app/auth(|/.*)$": "<rootDir>/libs/auth/src/$1"
     }
   },
   "config": {
