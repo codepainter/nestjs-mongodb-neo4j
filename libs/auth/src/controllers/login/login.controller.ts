@@ -17,7 +17,7 @@ export class LoginController {
 
   @Post('auth.login')
   @UseGuards(LocalAuthGuard)
-  async login(@Request() req) {
+  async login(@Request() req: any) {
     this.logger.trace('login()');
 
     const command = new LoginCommand({ user: req.user });
