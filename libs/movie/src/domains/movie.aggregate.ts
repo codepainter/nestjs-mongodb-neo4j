@@ -1,4 +1,5 @@
 import { AggregateRootBase } from '@app/shared/cqrs/aggregate-root.base';
+import { MovieCreatedEvent } from './events/movie-created/movie-created.event';
 
 export type MovieRequiredProps = Required<{
   id: string;
@@ -34,6 +35,10 @@ export class MovieAggregate extends AggregateRootBase implements Movie {
   constructor(props: MovieProps) {
     super();
     Object.assign(this, props);
+  }
+
+  create(): void {
+    this.apply(new MovieCreatedEvent(this.props()));
   }
 
   props(): MovieProps {

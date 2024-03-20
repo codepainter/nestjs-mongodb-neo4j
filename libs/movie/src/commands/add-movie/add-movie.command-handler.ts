@@ -22,6 +22,8 @@ export class AddMovieCommandHandler extends CommandHandlerBase<AddMovieCommand> 
       title: command.props.title,
     });
 
+    newMovie.create();
+
     newMovie.commit();
 
     return new AddMovieResult(newMovie.props().id);
