@@ -31,7 +31,6 @@ export class UserAggregateFactory {
         id: props.id,
         email: props.email,
         name: props.name,
-
         password: props.password,
         createdAt: props.createdAt,
         updatedAt: props.updatedAt,

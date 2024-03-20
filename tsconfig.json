@@ -37,7 +37,9 @@
       "@app/follow": ["libs/follow/src"],
       "@app/follow/*": ["libs/follow/src/*"],
       "@app/auth": ["libs/auth/src"],
-      "@app/auth/*": ["libs/auth/src/*"]
+      "@app/auth/*": ["libs/auth/src/*"],
+      "@app/movie": ["libs/movie/src"],
+      "@app/movie/*": ["libs/movie/src/*"]
     },
     "plugins": [
       {

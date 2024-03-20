@@ -110,6 +110,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/auth/tsconfig.lib.json"
       }
+    },
+    "movie": {
+      "type": "library",
+      "root": "libs/movie",
+      "entryFile": "index",
+      "sourceRoot": "libs/movie/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/movie/tsconfig.lib.json"
+      }
     }
   }
 }

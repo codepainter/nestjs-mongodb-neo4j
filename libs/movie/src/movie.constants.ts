@@ -1,0 +1,13 @@
+export const MOVIE_AGGREGATE_FACTORY = 'MOVIE_AGGREGATE_FACTORY';
+
+export const MOVIE_MONGO_WRITE_REPOSITORY = 'MOVIE_MONGO_WRITE_REPOSITORY';
+
+export const MOVIE_MODEL = 'MOVIE_MODEL';
+
+export enum MovieCodes {
+  ADDED = 'MOVIE.ADDED',
+}
+
+export enum MovieErrorCodes {
+  DUPLICATE_KEY = 'MOVIE.DUPLICATE_KEY',
+}

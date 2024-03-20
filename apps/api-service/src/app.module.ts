@@ -14,6 +14,7 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 
 import { AppConfigModule } from './config/config.module';
+import { MovieModule } from '@app/movie';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { AppConfigModule } from './config/config.module';
     UserModule,
     FollowModule,
     AuthModule,
+    MovieModule,
   ],
   providers: [
     {
