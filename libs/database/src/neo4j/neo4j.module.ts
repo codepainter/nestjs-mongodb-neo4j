@@ -4,10 +4,12 @@ import { Neo4jModule as NhogsNeo4jModule } from '@nhogs/nestjs-neo4j';
 
 import {
   FOLLOW_NEO4J_RELATIONSHIP_MODEL_SERVICE,
+  MOVIE_NEO4J_NODE_MODEL_SERVICE,
   NEO4J_UNIT_OF_WORK_FACTORY,
   USER_NEO4J_NODE_MODEL_SERVICE,
 } from './neo4j.constants';
 import { FollowNeo4jRelationshipModelService } from './services/follow.neo4j-relationship.model-service';
+import { MovieNeo4jNodeModelService } from './services/movie.neo4j-node.model-service';
 import { UserNeo4jNodeModelService } from './services/user.neo4j-node.model-service';
 import { Neo4jUnitOfWorkFactory } from './unit-of-work/neo4j.unit-of-work.factory';
 
@@ -27,6 +29,10 @@ const Services: Provider[] = [
   {
     provide: FOLLOW_NEO4J_RELATIONSHIP_MODEL_SERVICE,
     useClass: FollowNeo4jRelationshipModelService,
+  },
+  {
+    provide: MOVIE_NEO4J_NODE_MODEL_SERVICE,
+    useClass: MovieNeo4jNodeModelService,
   },
 ];
 
