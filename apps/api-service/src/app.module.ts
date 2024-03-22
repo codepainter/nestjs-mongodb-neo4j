@@ -15,6 +15,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 
 import { AppConfigModule } from './config/config.module';
 import { MovieModule } from '@app/movie';
+import { TaskScheduleModule } from '@app/schedule';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { MovieModule } from '@app/movie';
     FollowModule,
     AuthModule,
     MovieModule,
+    TaskScheduleModule,
   ],
   providers: [
     {

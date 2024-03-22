@@ -9,9 +9,13 @@ import { MovieAggregateFactory } from './domains/movie.aggregate-factory';
 import { MoviePersistedMessageHandler } from './domains/rpc-handlers/movie-persisted/movie-persisted.message-handler';
 import {
   MOVIE_AGGREGATE_FACTORY,
+  MOVIE_MONGO_READ_REPOSITORY,
   MOVIE_MONGO_WRITE_REPOSITORY,
   MOVIE_NEO4J_WRITE_REPOSITORY,
+  MOVIE_SERVICE,
 } from './movie.constants';
+import { MovieService } from './movie.service';
+import { MovieMongoReadRepository } from './repositories/movie.mongo-read-repository';
 import { MovieMongoWriteRepository } from './repositories/movie.mongo-write-repository';
 import { MovieNeo4jWriteRepository } from './repositories/movie.neo4j-write-repository';
 
@@ -38,8 +42,19 @@ const Repositories: Provider[] = [
     provide: MOVIE_MONGO_WRITE_REPOSITORY,
   },
   {
+    useClass: MovieMongoReadRepository,
+    provide: MOVIE_MONGO_READ_REPOSITORY,
+  },
+  {
     useClass: MovieNeo4jWriteRepository,
     provide: MOVIE_NEO4J_WRITE_REPOSITORY,
+  },
+];
+
+const Services: Provider[] = [
+  {
+    useClass: MovieService,
+    provide: MOVIE_SERVICE,
   },
 ];
 
@@ -52,7 +67,8 @@ const Repositories: Provider[] = [
     ...CommandHandlers,
     ...EventHandlers,
     ...Repositories,
+    ...Services,
   ],
-  exports: [],
+  exports: [MOVIE_SERVICE],
 })
 export class MovieModule {}
