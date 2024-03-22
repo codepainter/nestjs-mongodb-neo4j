@@ -1,5 +1,11 @@
 export interface IMovieService {
-  getAllIds(): Promise<string[]>;
+  getAllMongoIds(): Promise<string[]>;
 
-  countAll(): Promise<number>;
+  countAllMongo(): Promise<number>;
+
+  getAllNeo4jIds(): Promise<string[]>;
+
+  countAllNeo4j(): Promise<number>;
+
+  syncData(): Promise<void>;
 }

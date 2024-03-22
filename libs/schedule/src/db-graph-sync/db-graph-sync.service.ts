@@ -15,10 +15,17 @@ export class DbGraphSyncService {
   async everyMinute() {
     this.logger.debug('Called every minute');
 
-    const ids = await this.movieService.getAllIds();
-    this.logger.debug({ ids }, 'ids');
+    // const mongoIds = await this.movieService.getAllMongoIds();
+    // const neo4jIds = await this.movieService.getAllNeo4jIds();
+    // this.logger.debug({ neo4jIds }, 'ids');
 
-    const count = await this.movieService.countAll();
-    this.logger.debug({ count }, 'count');
+    const mongoCount = await this.movieService.countAllMongo();
+    const neo4jCount = await this.movieService.countAllNeo4j();
+    this.logger.debug({ mongoCount, neo4jCount }, 'count');
+
+    if (mongoCount !== neo4jCount) {
+      this.logger.debug('Count Difference found.');
+      await this.movieService.syncData();
+    }
   }
 }

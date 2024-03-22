@@ -11,12 +11,14 @@ import {
   MOVIE_AGGREGATE_FACTORY,
   MOVIE_MONGO_READ_REPOSITORY,
   MOVIE_MONGO_WRITE_REPOSITORY,
+  MOVIE_NEO4J_READ_REPOSITORY,
   MOVIE_NEO4J_WRITE_REPOSITORY,
   MOVIE_SERVICE,
 } from './movie.constants';
 import { MovieService } from './movie.service';
 import { MovieMongoReadRepository } from './repositories/movie.mongo-read-repository';
 import { MovieMongoWriteRepository } from './repositories/movie.mongo-write-repository';
+import { MovieNeo4jReadRepository } from './repositories/movie.neo4j-read-repository';
 import { MovieNeo4jWriteRepository } from './repositories/movie.neo4j-write-repository';
 
 const MessageHandlers = [MoviePersistedMessageHandler];
@@ -48,6 +50,10 @@ const Repositories: Provider[] = [
   {
     useClass: MovieNeo4jWriteRepository,
     provide: MOVIE_NEO4J_WRITE_REPOSITORY,
+  },
+  {
+    provide: MOVIE_NEO4J_READ_REPOSITORY,
+    useClass: MovieNeo4jReadRepository,
   },
 ];
 
