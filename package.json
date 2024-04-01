@@ -18,7 +18,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./apps/nestjs-mongodb-neo4j/test/jest-e2e.json",
-    "prepare": "husky install",
+    "prepare": "husky",
     "setup": "$PWD/scripts/setup.sh",
     "bootstrap": "pnpm install && docker compose up -d --build",
     "teardown": "docker-compose down",
