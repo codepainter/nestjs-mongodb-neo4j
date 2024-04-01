@@ -41,6 +41,7 @@
     "@nestjs/mongoose": "^10.0.4",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.3.3",
+    "@nestjs/schedule": "^4.0.1",
     "@nestjs/swagger": "^7.3.0",
     "@nestjs/terminus": "^10.2.3",
     "@nhogs/nestjs-neo4j": "^0.5.14",
@@ -147,7 +148,9 @@
       "^@app/user(|/.*)$": "<rootDir>/libs/user/src/$1",
       "^@app/queue(|/.*)$": "<rootDir>/libs/queue/src/$1",
       "^@app/follow(|/.*)$": "<rootDir>/libs/follow/src/$1",
-      "^@app/auth(|/.*)$": "<rootDir>/libs/auth/src/$1"
+      "^@app/auth(|/.*)$": "<rootDir>/libs/auth/src/$1",
+      "^@app/movie(|/.*)$": "<rootDir>/libs/movie/src/$1",
+      "^@app/schedule(|/.*)$": "<rootDir>/libs/schedule/src/$1"
     }
   },
   "config": {

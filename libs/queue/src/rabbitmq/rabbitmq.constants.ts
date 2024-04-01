@@ -6,6 +6,7 @@ export enum Exchange {
 
 export enum RoutingKey {
   NEO4J_USER_PERSISTED = 'neo4j.user.persisted',
+  NEO4J_MOVIE_PERSISTED = 'neo4j.movie.persisted',
 }
 
 export enum Queue {
