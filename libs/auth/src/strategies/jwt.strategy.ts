@@ -1,7 +1,6 @@
-import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 
 import { TokenType } from '../auth.constants';
@@ -11,7 +10,7 @@ import { AuthConfigService } from '../config/config.service';
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
-    @InjectPinoLogger(JwtStrategy.name) private readonly logger: PinoLogger,
+    @Inject(AuthConfigService)
     readonly configSvc: AuthConfigService,
   ) {
     super({
@@ -22,8 +21,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: JwtPayload): Promise<AuthRequest> {
-    this.logger.trace('JwtStrategy.validate()');
-    this.logger.debug({ payload }, 'Payload');
     return {
       id: payload.sub,
       type: payload.type as TokenType,

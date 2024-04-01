@@ -49,14 +49,4 @@ describe('CreateUserRequestBodyDto', () => {
 
     expect(errors.length).not.toEqual(0);
   });
-
-  it('should throw an error if the phone is not a string', async () => {
-    const dto = new CreateUserRequestBodyDto();
-    // @ts-ignore
-    dto.phone = 123;
-
-    const errors = await validate(dto);
-
-    expect(errors.length).not.toEqual(0);
-  });
 });

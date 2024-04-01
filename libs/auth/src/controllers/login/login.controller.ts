@@ -1,44 +1,26 @@
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
+import { AUTH_SERVICE } from '@app/auth/auth.constants';
+import { AuthService } from '@app/auth/auth.service';
 import { LoginCommand } from '@app/auth/commands/login/login.command';
-import { LoginRequestBodyDto } from '@app/auth/dtos/login.request-body.dto';
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { LocalAuthGuard } from '@app/auth/guards/local.auth-guard';
+import { Controller, Inject, Post, Request, UseGuards } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import {
-  ApiNotFoundResponse,
-  ApiOkResponse,
-  ApiOperation,
-  ApiTags,
-  ApiUnauthorizedResponse,
-} from '@nestjs/swagger';
-
-import { apiNotFoundResponseSchema } from './not-found.schema';
-import { apiOkResponseSchema } from './ok.schema';
-import { apiUnauthorizedResponse } from './unauthorized.schema';
 
 @Controller()
 export class LoginController {
   constructor(
-    @InjectPinoLogger(LoginController.name) private readonly logger: PinoLogger,
-    readonly commandBus: CommandBus,
+    @InjectPinoLogger(LoginController.name) readonly logger: PinoLogger,
+    @Inject(AUTH_SERVICE) readonly authService: AuthService,
+    private readonly commandBus: CommandBus,
   ) {}
 
   @Post('auth.login')
-  @HttpCode(HttpStatus.OK)
-  @ApiTags('auth')
-  @ApiOperation({
-    operationId: 'auth.login',
-    summary: 'Login',
-    description: 'Login',
-  })
-  @ApiOkResponse(apiOkResponseSchema)
-  @ApiNotFoundResponse(apiNotFoundResponseSchema)
-  @ApiUnauthorizedResponse(apiUnauthorizedResponse)
-  login(@Body() body: LoginRequestBodyDto) {
-    this.logger.trace('LoginController.login()');
-    this.logger.debug({ body }, 'Body');
+  @UseGuards(LocalAuthGuard)
+  async login(@Request() req: any) {
+    this.logger.trace('login()');
 
-    const command = new LoginCommand(body);
+    const command = new LoginCommand({ user: req.user });
 
     return this.commandBus.execute(command);
   }

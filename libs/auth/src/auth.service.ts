@@ -1,73 +1,75 @@
-import * as ms from 'ms';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
-import { UserProps } from '@app/user/domains/user.aggregate';
-import { Inject } from '@nestjs/common';
+import { PasswordUtil } from '@app/shared/utils/password.util';
+import { USER_SERVICE } from '@app/user';
+import { IUserService } from '@app/user/interfaces/user.service.interface';
+import { UserVM } from '@app/user/vms/user.vm';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import { TokenType } from './auth.constants';
 import { AuthConfigService } from './config/config.service';
-import { IAuthService } from './interfaces/auth.service.interface';
-import { REDIS_CACHE_SERVICE } from '@app/cache/cache.constants';
-import { ICacheService } from '@app/cache/cache.interface';
+import { AuthVM } from './vms/access-token.vm';
 
-export class AuthService implements IAuthService {
-  private ACCESS_TOKEN_EXPIRES_IN = '60s';
-
+@Injectable()
+export class AuthService {
   constructor(
-    @InjectPinoLogger(AuthService.name) private readonly logger: PinoLogger,
-    private readonly jwtService: JwtService,
-    @Inject(AuthConfigService) private readonly config: AuthConfigService,
-    @Inject(REDIS_CACHE_SERVICE) private readonly cacheService: ICacheService,
+    @InjectPinoLogger(AuthService.name) readonly logger: PinoLogger,
+    @Inject(USER_SERVICE) readonly userService: IUserService,
+    private jwtService: JwtService,
+    @Inject(AuthConfigService)
+    private readonly configService: AuthConfigService,
   ) {}
 
-  async generateAccessToken(userProps: Pick<UserProps, 'id'>): Promise<string> {
-    this.logger.debug({ userProps }, 'generateAccessToken()');
+  async validateUser(email: string, password: string): Promise<UserVM> {
+    this.logger.trace('validateUser()');
+    let user = null;
 
-    const payload = {
-      type: TokenType.ACCESS_TOKEN,
-    };
+    try {
+      user = await this.userService.getUserVMByEmail(email);
+    } catch (error) {
+      throw new UnauthorizedException();
+    }
 
-    const accessToken = this.jwtService.sign(payload, {
-      expiresIn: this.ACCESS_TOKEN_EXPIRES_IN,
-      subject: userProps.id,
+    if (!PasswordUtil.compare(password, user.password)) {
+      throw new UnauthorizedException();
+    }
+
+    return user;
+  }
+
+  async login(user: UserVM): Promise<AuthVM> {
+    this.logger.trace('login()');
+
+    const accessToken = this.jwtService.sign(
+      {
+        email: user.email,
+        type: TokenType.ACCESS_TOKEN,
+      },
+      {
+        subject: user.id,
+        expiresIn: this.configService.expiresIn,
+        issuer: this.configService.issuer,
+        audience: this.configService.audience,
+      },
+    );
+
+    const refreshToken = this.jwtService.sign(
+      {
+        email: user.email,
+        type: TokenType.REFRESH_TOKEN,
+      },
+      {
+        subject: user.id,
+        expiresIn: '30d',
+        issuer: this.configService.issuer,
+        audience: this.configService.audience,
+      },
+    );
+
+    return new AuthVM({
+      accessToken,
+      refreshToken,
     });
-    await this.cacheToken(accessToken, ms(this.ACCESS_TOKEN_EXPIRES_IN) / 1000);
-
-    return accessToken;
-  }
-
-  async generateRefreshToken(
-    userProps: Pick<UserProps, 'id'>,
-  ): Promise<string> {
-    this.logger.debug({ userProps }, 'generateRefreshToken()');
-
-    const payload = {
-      type: TokenType.REFRESH_TOKEN,
-    };
-
-    const refreshToken = this.jwtService.sign(payload, {
-      expiresIn: this.config.expiresIn,
-      subject: userProps.id,
-    });
-    await this.cacheToken(refreshToken, ms(this.config.expiresIn) / 1000);
-
-    return refreshToken;
-  }
-
-  async cacheToken(token: string, ttl: number): Promise<void> {
-    this.logger.debug({ token }, 'cacheToken()');
-    await this.cacheService.set(token, '1', ttl);
-  }
-
-  async isTokenCached(token: string): Promise<boolean> {
-    this.logger.debug({ token }, 'isTokenCached()');
-    const cachedToken = await this.cacheService.get(token);
-    return !!cachedToken;
-  }
-
-  async invalidateToken(token: string): Promise<void> {
-    this.logger.debug({ token }, 'invalidateToken()');
-    await this.cacheService.del(token);
   }
 }

@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 import helmet from 'helmet';
 import { Logger as PinoLogger } from 'nestjs-pino';
 
@@ -15,6 +17,7 @@ import { AppConfigService } from './config/config.service';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true,
+    snapshot: true,
   });
 
   const logger = app.get<PinoLogger>(PinoLogger);

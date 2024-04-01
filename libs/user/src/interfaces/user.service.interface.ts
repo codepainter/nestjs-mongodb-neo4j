@@ -14,18 +14,19 @@ export interface IUserService {
   /**
    *
    *
-   * @param {string} phone
-   * @return {*}  {Promise<UserVM>}
-   * @memberof IUserService
-   */
-  getAggregateByPhone(phone: string): Promise<User>;
-
-  /**
-   *
-   *
    * @param {string} id
    * @return {*}  {Promise<UserVM>}
    * @memberof IUserService
    */
   getUserById(id: string): Promise<UserVM>;
+
+  /**
+   *
+   *
+   * @return {*}  {Promise<UserVM>}
+   * @memberof IUserService
+   */
+  getRandomUser(count?: number): Promise<UserVM[]>;
+
+  getUserVMByEmail(id: string): Promise<UserVM>;
 }

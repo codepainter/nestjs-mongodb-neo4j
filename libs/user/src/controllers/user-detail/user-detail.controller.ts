@@ -1,11 +1,10 @@
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
-import { AccessTokenRequired } from '@app/auth/decorators/access-token-required.decorator';
-import { AccessTokenRequiredGuard } from '@app/auth/guards/access-token-required.guard';
-import { JwtAuthGuard } from '@app/auth/guards/jwt-auth.guard';
-import { UserDetailsRequestBodyDto } from '@app/user/dtos/user-detail.request-body.dto';
+import { Auth } from '@app/auth/decorators/auth.decorator';
+import { JwtAuthGuard } from '@app/auth/guards/jwt.auth-guard';
 import { UserDetailsQuery } from '@app/user/queries/user-detail/user-detail.query';
-import { Controller, Get, Query, UseGuards } from '@nestjs/common';
+import { UserVM } from '@app/user/vms/user.vm';
+import { Controller, Get, UseGuards } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import {
   ApiNotFoundResponse,
@@ -33,13 +32,12 @@ export class UserDetailsController {
   })
   @ApiOkResponse(apiOkResponseSchema)
   @ApiNotFoundResponse(notFoundResponseSchema)
-  @AccessTokenRequired()
-  @UseGuards(JwtAuthGuard, AccessTokenRequiredGuard)
-  getUser(@Query() qs: UserDetailsRequestBodyDto) {
+  @UseGuards(JwtAuthGuard)
+  getUser(@Auth() auth: UserVM) {
     this.logger.trace('getUser()');
-    this.logger.debug({ qs }, 'QueryString');
+    this.logger.debug({ auth }, 'Auth');
 
-    const query = new UserDetailsQuery({ id: qs.id });
+    const query = new UserDetailsQuery({ id: auth.id });
 
     return this.queryBus.execute(query);
   }

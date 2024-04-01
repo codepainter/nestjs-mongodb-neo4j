@@ -13,6 +13,8 @@ import { AuthConfigService } from './config.service';
       validationSchema: Joi.object({
         JWT_SECRET: Joi.string(),
         JWT_EXPIRES_IN: Joi.string(),
+        JWT_ISSUER: Joi.string(),
+        JWT_AUDIENCE: Joi.string(),
       }),
       validationOptions: {
         allowUnknown: true,

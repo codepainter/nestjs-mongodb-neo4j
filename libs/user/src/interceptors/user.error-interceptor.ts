@@ -11,9 +11,9 @@ import {
 } from '@nestjs/common';
 
 import {
-  DuplicateKeyException,
+  DuplicateUserException,
   UserNotFoundException,
-} from '../errors/user.errors';
+} from '../exceptions/user.exceptions';
 
 @Injectable()
 export class UserErrorInterceptor implements NestInterceptor {
@@ -27,13 +27,13 @@ export class UserErrorInterceptor implements NestInterceptor {
       catchError((error) => {
         this.logger.debug(
           { handlerName: context.getHandler().name, error },
-          'Auth Error Intercepted',
+          'User Error Intercepted',
         );
 
         switch (error.constructor) {
           case UserNotFoundException:
             return throwError(() => new NotFoundException(error.toJSON()));
-          case DuplicateKeyException:
+          case DuplicateUserException:
             return throwError(() => new ConflictException(error.toJSON()));
 
           default:

@@ -2,8 +2,8 @@ import { PinoLogger } from 'nestjs-pino';
 import { createMock } from 'ts-auto-mock';
 
 import { UserVMStub } from '@app/test/user.stubs';
-import { UserNotFoundException } from '@app/user/errors/user.errors';
-import { IUserReadRepository } from '@app/user/interfaces/user.read-repository.interface';
+import { UserNotFoundException } from '@app/user/exceptions/user.exceptions';
+import { IUserMongoReadRepository } from '@app/user/interfaces/user.mongo-read-repository.interface';
 import { faker } from '@faker-js/faker';
 
 import { UserDetailsQuery } from './user-detail.query';
@@ -12,7 +12,7 @@ import { UserDetailsResult } from './user-detail.result';
 
 describe('UserDetailQueryHandler', () => {
   const logger = createMock<PinoLogger>();
-  const userReadRepo = createMock<IUserReadRepository>();
+  const userReadRepo = createMock<IUserMongoReadRepository>();
   const queryHandler = new UserDetailsQueryHandler(logger, userReadRepo);
 
   afterEach(() => {
@@ -22,7 +22,7 @@ describe('UserDetailQueryHandler', () => {
   describe('handleQuery', () => {
     it('should throw an error if the user is not found', async () => {
       const query = new UserDetailsQuery({
-        id: faker.datatype.uuid(),
+        id: faker.string.uuid(),
       });
 
       const userReadRepoFindByIdSpy = jest
@@ -31,13 +31,13 @@ describe('UserDetailQueryHandler', () => {
 
       const execute = queryHandler.handleQuery(query);
 
-      await expect(execute).rejects.toThrowError(UserNotFoundException);
+      await expect(execute).rejects.toThrow(UserNotFoundException);
       expect(userReadRepoFindByIdSpy).toHaveBeenCalledTimes(1);
     });
 
     it('should return a UserDetailsResult', async () => {
       const query = new UserDetailsQuery({
-        id: faker.datatype.uuid(),
+        id: faker.string.uuid(),
       });
 
       const userReadRepoFindByIdSpy = jest

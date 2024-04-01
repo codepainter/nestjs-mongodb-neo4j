@@ -1,5 +1,6 @@
 import { UserModule } from '@app/user';
 import { Module, Provider } from '@nestjs/common';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 import { CqrsModule } from '@nestjs/cqrs';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
@@ -10,24 +11,30 @@ import { LoginCommandHandler } from './commands/login/login.command-handler';
 import { AuthConfigModule } from './config/config.module';
 import { AuthConfigService } from './config/config.service';
 import { LoginController } from './controllers/login/login.controller';
-import { RefreshTokenController } from './controllers/refresh-token/refresh-token.controller';
-import { RefreshTokenQueryHandler } from './queries/refresh-token/refresh-token.query-handler';
+import { AuthErrorInterceptor } from './interceptors/auth.error-interceptor';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { LocalStrategy } from './strategies/local.strategy';
 
 const CommandHandlers: Provider[] = [LoginCommandHandler];
 
-const QueryHandlers: Provider[] = [RefreshTokenQueryHandler];
-
-const Services: Provider[] = [
+const Services = [
   {
     provide: AUTH_SERVICE,
     useClass: AuthService,
   },
 ];
 
-const Strategies: Provider[] = [JwtStrategy];
+const Strategies: Provider[] = [LocalStrategy, JwtStrategy];
+
+const Interceptors: Provider[] = [
+  {
+    provide: APP_INTERCEPTOR,
+    useClass: AuthErrorInterceptor,
+  },
+];
 
 @Module({
+  controllers: [LoginController],
   imports: [
     CqrsModule,
     PassportModule,
@@ -37,12 +44,12 @@ const Strategies: Provider[] = [JwtStrategy];
       inject: [AuthConfigService],
       useFactory: (config: AuthConfigService) => ({
         secret: config.secret,
+        signOptions: { expiresIn: config.expiresIn },
       }),
     }),
     UserModule,
   ],
-  providers: [...CommandHandlers, ...QueryHandlers, ...Services, ...Strategies],
-  controllers: [LoginController, RefreshTokenController],
-  exports: [],
+  providers: [...Strategies, ...CommandHandlers, ...Services, ...Interceptors],
+  exports: [AUTH_SERVICE],
 })
 export class AuthModule {}

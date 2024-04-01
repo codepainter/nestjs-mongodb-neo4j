@@ -1,17 +1,17 @@
-import { Expose } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 
 export class UserVM {
   @Expose({ name: 'id' })
-  id: string;
+  readonly id: string;
 
   @Expose({ name: 'name' })
-  name: string;
+  readonly name: string;
 
   @Expose({ name: 'email' })
-  email: string;
+  readonly email: string;
 
-  @Expose({ name: 'phone' })
-  phone: string;
+  @Exclude()
+  readonly password: string;
 
   constructor(props: UserVM) {
     Object.assign(this, props);

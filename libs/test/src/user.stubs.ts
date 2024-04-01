@@ -6,13 +6,9 @@ export function UserAggregateDataStub(
   override?: Partial<UserProps>,
 ): UserProps {
   const data: UserProps = {
-    id: faker.datatype.uuid(),
-    name: faker.name.fullName(),
+    id: faker.string.uuid(),
+    name: faker.person.fullName(),
     email: faker.internet.exampleEmail(),
-    phone: faker.phone.number(),
-    coachName: faker.name.firstName(),
-    coachPhone: faker.phone.number(),
-    platinumName: faker.name.firstName(),
     password: faker.internet.password(),
     createdAt: faker.date.past(),
     updatedAt: faker.date.past(),

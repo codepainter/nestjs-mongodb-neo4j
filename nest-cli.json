@@ -3,6 +3,8 @@
   "collection": "@nestjs/schematics",
   "sourceRoot": "apps/api-service/src",
   "compilerOptions": {
+    "builder": "swc",
+    "typeCheck": true,
     "deleteOutDir": true,
     "webpack": true,
     "tsConfigPath": "apps/api-service/tsconfig.app.json"
@@ -73,6 +75,33 @@
         "tsConfigPath": "libs/test/tsconfig.lib.json"
       }
     },
+    "cache": {
+      "type": "library",
+      "root": "libs/cache",
+      "entryFile": "index",
+      "sourceRoot": "libs/cache/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/cache/tsconfig.lib.json"
+      }
+    },
+    "queue": {
+      "type": "library",
+      "root": "libs/queue",
+      "entryFile": "index",
+      "sourceRoot": "libs/queue/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/queue/tsconfig.lib.json"
+      }
+    },
+    "follow": {
+      "type": "library",
+      "root": "libs/follow",
+      "entryFile": "index",
+      "sourceRoot": "libs/follow/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/follow/tsconfig.lib.json"
+      }
+    },
     "auth": {
       "type": "library",
       "root": "libs/auth",
@@ -82,13 +111,22 @@
         "tsConfigPath": "libs/auth/tsconfig.lib.json"
       }
     },
-    "cache": {
+    "movie": {
       "type": "library",
-      "root": "libs/cache",
+      "root": "libs/movie",
       "entryFile": "index",
-      "sourceRoot": "libs/cache/src",
+      "sourceRoot": "libs/movie/src",
       "compilerOptions": {
-        "tsConfigPath": "libs/cache/tsconfig.lib.json"
+        "tsConfigPath": "libs/movie/tsconfig.lib.json"
+      }
+    },
+    "schedule": {
+      "type": "library",
+      "root": "libs/schedule",
+      "entryFile": "index",
+      "sourceRoot": "libs/schedule/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/schedule/tsconfig.lib.json"
       }
     }
   }

@@ -13,7 +13,8 @@ services:
       - LOG_LEVEL=info
       - MONGO_DATABASE_URI=mongodb://mongodb:27017/nestjs-mongodb-neo4j
       - REDIS_HOST=cache
-      - NEO4J_URI=bolt://neo4j:7687
+      - NEO4J_HOST=neo4j
+      - RABBITMQ_URI=amqp://user:password@rabbitmq:5672
     ports:
       # Exposed:container
       - "3000:3000"
@@ -21,11 +22,15 @@ services:
       - mongodb
       - neo4j
       - cache
+      - rabbitmq
+    # rabbitmq and neo4j takes time to start
+    # so we restart the service until they are up
+    restart: unless-stopped
     develop:
       watch:
         - path: package.json
           action: rebuild
-        - path: yarn.lock
+        - path: pnpm-lock.yaml
           action: rebuild
         - path: nest-cli.json
           action: rebuild
@@ -41,7 +46,7 @@ services:
       - MONGO_INITDB_DATABASE=nestjs-mongodb-neo4j
 
   neo4j:
-    image: docker.io/bitnami/neo4j:5
+    image: bitnami/neo4j:5.16.0
     environment:
       - NEO4J_PASSWORD=password
     ports:
@@ -62,7 +67,23 @@ services:
     volumes:
       - "cache_data:/bitnami/redis/data"
 
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - "4369:4369"
+      - "5551:5551"
+      - "5552:5552"
+      - "5672:5672"
+      - "25672:25672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=password
+    volumes:
+      - "rabbitmq_data:/bitnami/rabbitmq/mnesia"
+
 volumes:
   mongodb_data:
   cache_data:
   neo4j_data:
+  rabbitmq_data:

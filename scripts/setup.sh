@@ -11,8 +11,8 @@ printf "🏗️👷 Installing node... 👷🏗️\n"
 nvm install 
 nvm use
 
-printf "🏗️👷Installing yarn... 👷🏗️\n"
+printf "🏗️👷Installing pnpm... 👷🏗️\n"
 
-npm -g install yarn
+npm -g install pnpm
 
 printf "🏁 Setup complete! 🏁"

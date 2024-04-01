@@ -7,8 +7,8 @@ import config from './config';
 export class AuthConfigService {
   private config: ConfigType<typeof config>;
 
-  constructor(private readonly configService: ConfigService) {
-    this.config = this.configService.getOrThrow('auth');
+  constructor(private configService: ConfigService) {
+    this.config = this.configService.get('auth');
   }
 
   get secret(): string {
@@ -17,5 +17,13 @@ export class AuthConfigService {
 
   get expiresIn(): string {
     return this.config.expiresIn;
+  }
+
+  get issuer(): string {
+    return this.config.issuer;
+  }
+
+  get audience(): string {
+    return this.config.audience;
   }
 }

@@ -1,7 +1,7 @@
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
 import { QueryHandlerBase } from '@app/shared/cqrs/query-handler.base';
-import { IUserReadRepository } from '@app/user/interfaces/user.read-repository.interface';
+import { IUserMongoReadRepository } from '@app/user/interfaces/user.mongo-read-repository.interface';
 import { USER_READ_REPOSITORY } from '@app/user/user.constants';
 import { Inject } from '@nestjs/common';
 import { QueryHandler } from '@nestjs/cqrs';
@@ -17,7 +17,7 @@ export class UserDetailsQueryHandler extends QueryHandlerBase<
   constructor(
     @InjectPinoLogger(UserDetailsQueryHandler.name) readonly logger: PinoLogger,
     @Inject(USER_READ_REPOSITORY)
-    private readonly userReadRepo: IUserReadRepository,
+    private readonly userReadRepo: IUserMongoReadRepository,
   ) {
     super(logger);
   }

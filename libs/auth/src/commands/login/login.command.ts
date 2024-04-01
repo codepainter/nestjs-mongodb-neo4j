@@ -1,9 +1,8 @@
 import { CommandBase } from '@app/shared/cqrs/command.base';
+import { UserVM } from '@app/user/vms/user.vm';
 
 type LoginCommandProps = {
-  email?: string;
-  phone?: string;
-  password: string;
+  user: UserVM;
 };
 
 export class LoginCommand extends CommandBase<LoginCommandProps> {
