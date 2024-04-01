@@ -7,10 +7,6 @@ export class HealthResultProps {
   readonly info?: object;
   readonly error?: object;
   readonly details: object;
-
-  constructor(props: HealthResultProps) {
-    Object.assign(this, props);
-  }
 }
 
 export class HealthResult extends ResultBase<HealthResultProps> {
