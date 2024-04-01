@@ -46,11 +46,24 @@ export class UserMongoReadRepository implements IUserMongoReadRepository {
     return randomUser.map(this.toVM);
   }
 
+  async findByUsername(username: string): Promise<UserVM> {
+    const user = await this.model.findOne({ username }).exec();
+    if (!user) throw new UserNotFoundException({ username });
+    return user;
+  }
+
+  async findByEmail(email: string): Promise<UserVM> {
+    const user = await this.model.findOne({ email }).exec();
+    if (!user) throw new UserNotFoundException({ email });
+    return user;
+  }
+
   private toVM(doc: UserDocument): UserVM {
     return new UserVM({
       id: doc.id,
       name: doc.name,
       email: doc.email,
+      password: doc.password,
     });
   }
 }

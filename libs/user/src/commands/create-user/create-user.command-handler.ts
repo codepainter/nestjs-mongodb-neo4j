@@ -1,7 +1,7 @@
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
 import { CommandHandlerBase } from '@app/shared/cqrs/command-handler.base';
-import { UserAggregateFactory } from '@app/user/domains/user.factory';
+import { UserAggregateFactory } from '@app/user/domains/user.aggregate-factory';
 import { USER_AGGREGATE_FACTORY } from '@app/user/user.constants';
 import { Inject } from '@nestjs/common';
 import { CommandHandler } from '@nestjs/cqrs';
