@@ -1,5 +1,5 @@
 # .github/workflows/release.yml
-name: Semantic Release
+name: Release
 
 on:
   push:
